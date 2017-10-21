@@ -44,11 +44,13 @@ FC88E0EF DCC7E3A9 56E4FFED 7629746B
 E529AECA 92A96B60 72AE8928 8A240AAC
 —— END LICENSE ——
 ```
+[libsublime-imfix.so](/blog/2017/08/17/%E4%B8%80%E7%AB%99%E5%BC%8F%E9%85%8D%E7%BD%AEubuntu/libsublime-imfix.so)
+[淘宝npm镜像](https://npm.taobao.org/)
+`npm install -g cnpm --registry=https://registry.npm.taobao.org`
 
 `sudo apt-get remove 'libreoffice-*'`
 `sudo apt-get autoremove`
 [http://wps-community.org/downloads](http://wps-community.org/downloads)
-``
 
 ##### 别人整理的
 [http://blog.csdn.net/terence1212/article/details/52270210](http://blog.csdn.net/terence1212/article/details/52270210)
@@ -69,6 +71,7 @@ E529AECA 92A96B60 72AE8928 8A240AAC
 5. [https://extensions.gnome.org/](https://extensions.gnome.org/)
 6. 下载theme，使用gnome-tweak-tool进行配置
 [OSX-Arc-White](https://github.com/LinxGem33/OSX-Arc-White)
+[更多主题下载](https://www.gnome-look.org)
 7. 一些插件
 TopIcons Plus
 Dash to Dock
