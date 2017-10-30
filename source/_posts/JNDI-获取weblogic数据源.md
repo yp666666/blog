@@ -1,8 +1,8 @@
 ---
 title: JNDI 获取weblogic数据源
 date: 2017-09-11 22:30:45
-category: java
-tags: 
+category:
+tags: weblogic
 ---
 
 [JNDI](https://en.wikipedia.org/wiki/Java_Naming_and_Directory_Interface): Java Naming and Directory Interface.
@@ -33,7 +33,7 @@ public abstract class DBUtils {
         try {
             Hashtable<String, String> env = new Hashtable<>();
             env.put(Context.INITIAL_CONTEXT_FACTORY, "weblogic.jndi.WLInitialContextFactory");
-            env.put(Context.PROVIDER_URL, "t3://localhost:7001");
+            env.put(Context.PROVIDER_URL, "t3://localhost:7001");//7001为数据源挂载的server端口
             Context context = new InitialContext(env);
             ds = (DataSource) context.lookup("dbconn");
         } catch (NamingException e) {
@@ -116,3 +116,5 @@ public abstract class DBUtils {
 `java -classpath /weblogic/wlserver/server/lib/weblogic.jar: common.DBUtils`
 其中**setDomainEnv.sh**文件内容
 [setDomainEnv.sh](/blog/2017/09/11/JNDI-%E8%8E%B7%E5%8F%96weblogic%E6%95%B0%E6%8D%AE%E6%BA%90/setDomainEnv.sh.txt)
+
+额，如果直接把weblogic.jar加到build lib中，也能直接运行。。。

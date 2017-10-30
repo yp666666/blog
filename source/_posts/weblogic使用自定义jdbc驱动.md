@@ -31,4 +31,10 @@ ojdbc6.jar, ojdbc6_g.jar, and ojdbc6dms.jar for JDK 6
      - 作用于所有domain，编辑WL_HOME/common/bin/**commEnv.cmd/sh**,将jar file 写到WEBLOGIC_CLASSPATH最前面。
 
 
-welbogic 11g略有不同，自带驱动在WL_HOME/server/lib中。     
+welbogic 11g略有不同，自带驱动在WL_HOME/server/lib中。  
+[jdbc driver for weblogic server 12.2.1.3.0](https://docs.oracle.com/middleware/12213/wls/JDBCA/third_party_drivers.htm#JDBCA231)   
+
+在weblogic server 12.2.1.3.0中，自带驱动放在**$ORACLE_HOME/oracle_common/modules**中，如mySQL5.1x(mysql-connector-java-commercial-5.1.22-bin.jar)、Oracle Thin Driver(ojdbc8.jar)。
+
+如果要使用weblogic没有的驱动，则直接把驱动jar放到**DOMAIN_HOME/lib **中，它作用于整个domain。
+
