@@ -40,6 +40,7 @@ sudo apt-get install nginx
 
 #### 入门
 1. 启动nginx
+`sudo service nginx start`
 `sudo nginx`
 2. 配置静态资源服务器
 + 备份

@@ -32,7 +32,7 @@ tags:
 ### GC收集器参数
 
 ### GC日志参数
-
+-XX:+PrintGC
 -XX:+PrintGCDetails
 -XX:+PrintGCTimeStamps
 -XX:+PrintHeapAtGC
