@@ -24,3 +24,10 @@ GRANT debug any procedure, debug connect session TO hr;
 4.单击红色`debug`按钮
 5.在`Parameters/Input Value`中填入`IN`的参数，`OUT`可以不管
 6.单击`OK`
+
+#### truncate等待锁
+默认情况下truncate没有获取锁会立即报错，需要设置DDL_LOCK_TIMEOUT，默认0，即NOWAIT，最大1000000（秒），大约11.5天。
+```sql
+show parameter ddl_lock_time;
+alter session set ddl_lock_timeout=5;
+```

@@ -38,6 +38,12 @@ sudo apt-get install nginx
 /var/cache/nginx
 /var/log/nginx
 
+##### Mac安装nginx
+下载nginx源码，正则匹配需要[pcre](http://mac-dev-env.patrickbougie.com/pcre/)库，需要下载[pcre源码](ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre)共同编译
+`./configure --prefix=/etc/nginx --with-pcre=/Users/hero/tmp/pcre-8.41`
+`make`
+`sudo make install`
+
 #### 入门
 1. 启动nginx
 `sudo service nginx start`
