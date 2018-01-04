@@ -2,7 +2,7 @@
 title: 给spring-mvc添加事务
 date: 2017-02-28 00:48:17
 category: 
-tags: spring-mvc
+tags:
 ---
  
 > 所谓的spring容器，一般指的是spring-context所提供的IOC容器；但是我们一般都是要建立一个web项目，所以就要引入另一个依赖---spring-web，它也提供了一个容器，在web.xml文件中配置一个ContextLoaderListener就可以将IOC容器加入到spring-web容器中。

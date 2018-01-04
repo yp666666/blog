@@ -2,7 +2,7 @@
 title: Wolf and Rabbit
 date: 2016-06-23 22:52:21
 category: hdu
-tags: 最大公约数
+tags: 
 ---
 [题目链接](http://acm.hdu.edu.cn/game/entry/problem/show.php?chapterid=2&sectionid=2&problemid=4)
 Problem Description

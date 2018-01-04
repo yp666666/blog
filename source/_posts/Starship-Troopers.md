@@ -2,7 +2,7 @@
 title: Starship Troopers
 date: 2016-06-29 21:34:07
 category: hdu
-tags: 树形DP
+tags:
 ---
 [题目链接](http://acm.hdu.edu.cn/showproblem.php?pid=1011)
 Problem Description

@@ -44,5 +44,5 @@ java -classpath ~/.m2/repository/mysql/mysql-connector-java/5.1.6/mysql-connecto
 #### 结果
 TestB会等待TestA执行commit，如果TestA不执行，TestB会一直等到超时为止。
 手动提交模式下，sql执行完还在占有锁。（自动提交其实是一样的）
-数据库保证事务的原子性应该是这样的，所有的更新sql会一直占有锁，这样其它更新语句就必须等待，这样原子性、一致性就得到了保障。
+数据库保证事务的原子性应该是这样的，所有的更新sql会一直占有锁，这样其它更新语句就必须等待，这样原子性就得到了保障。
 

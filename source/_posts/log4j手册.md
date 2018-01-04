@@ -2,7 +2,7 @@
 title: log4j2手册
 date: 2017-03-28 22:24:55
 category:
-tags: log4j2
+tags:
 ---
 ** 参考文献 **
 [官网](https://logging.apache.org/log4j/2.x/)

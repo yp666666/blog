@@ -2,7 +2,7 @@
 title: c语言字符串处理
 date: 2016-06-21 01:38:39
 category: hdu
-tags: 字符串处理
+tags: 
 ---
 [题目链接](http://acm.hdu.edu.cn/game/entry/problem/show.php?chapterid=1&sectionid=2&problemid=14)
 **The Seven Percent Solution**

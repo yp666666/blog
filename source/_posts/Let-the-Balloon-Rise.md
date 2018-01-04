@@ -2,7 +2,7 @@
 title: Let the Balloon Rise
 date: 2016-06-27 11:58:21
 category: hdu
-tags: trie树
+tags:
 ---
 [题目链接](http://acm.hdu.edu.cn/showproblem.php?pid=1004)
 Problem Description

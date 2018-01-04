@@ -2,7 +2,7 @@
 title: Joseph
 date: 2016-06-23 13:37:53
 category: hdu
-tags: 约瑟夫环
+tags:
 ---
 [题目链接](http://acm.hdu.edu.cn/game/entry/problem/show.php?chapterid=2&sectionid=2&problemid=2)
 Problem Description

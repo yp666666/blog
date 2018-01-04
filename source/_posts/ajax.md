@@ -2,7 +2,7 @@
 title: ajax
 date: 2017-08-21 23:59:47
 category:
-tags: ajax
+tags:
 ---
 配起来nginx就可以学ajax了
 [ajax w3schools](https://www.w3schools.com/xml/ajax_intro.asp)

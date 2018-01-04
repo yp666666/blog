@@ -2,7 +2,7 @@
 title: 同学，你知道这俩string相等吗？
 date: 2017-06-23 20:08:00
 category:
-tags: java
+tags:
 ---
 
 你肯定有这样的经历，

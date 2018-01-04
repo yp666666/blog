@@ -2,7 +2,7 @@
 title: synchronized vs ReentrantLock
 date: 2017-03-08 22:37:02
 category: java
-tags: lock
+tags:
 ---
 
 > 最近看到项目代码中有很多地方用到了`synchronized`，纠结它与`ReentrantLock`在性能上孰优孰劣。正好也把`ReadWriteLock`、`ReentrantReadWriteLock`、`StampedLock`也研究一下。

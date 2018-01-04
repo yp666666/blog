@@ -2,7 +2,7 @@
 title: shiro
 date: 2017-09-03 14:23:57
 category:
-tags: shiro
+tags:
 ---
 > 好的老师，能让你事半功倍、信心倍增。
 

@@ -2,7 +2,7 @@
 title: Bash Script学习
 date: 2017-05-09 22:58:50
 category:
-tags: shell
+tags: 
 ---
 >不看[TLCL](http://linuxcommand.org/index.php),学会shell script也惘然！
 

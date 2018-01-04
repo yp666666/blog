@@ -2,7 +2,7 @@
 title: Safecracker
 date: 2016-06-30 02:39:42
 category: hdu
-tags: 排列
+tags: 
 ---
 [题目链接](http://acm.hdu.edu.cn/showproblem.php?pid=1015)
 Problem Description

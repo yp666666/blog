@@ -2,7 +2,7 @@
 title: Ignatius and the Princess I
 date: 2016-07-02 15:30:45
 category: hdu
-tags: BFS
+tags:
 ---
 [题目链接](http://acm.hdu.edu.cn/showproblem.php?pid=1026)
 Problem Description

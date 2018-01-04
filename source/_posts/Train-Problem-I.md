@@ -2,7 +2,7 @@
 title: Train Problem I
 date: 2016-06-30 14:30:04
 category: hdu
-tags: 模拟
+tags:
 ---
 [题目链接](http://acm.hdu.edu.cn/showproblem.php?pid=1022)
 Problem Description

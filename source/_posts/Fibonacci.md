@@ -2,7 +2,7 @@
 title: Fibonacci
 date: 2016-06-23 00:32:40
 category: hdu
-tags: 数论
+tags: 
 ---
 [题目链接](http://acm.hdu.edu.cn/game/entry/problem/show.php?chapterid=2&sectionid=2&problemid=1)
 Problem Description

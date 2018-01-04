@@ -2,7 +2,7 @@
 title: Ignatius and the Princess II
 date: 2016-07-03 02:58:25
 category: hdu
-tags: 排列
+tags: 
 ---
 [题目链接](http://acm.hdu.edu.cn/showproblem.php?pid=1027)
 Problem Description

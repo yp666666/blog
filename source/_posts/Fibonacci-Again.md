@@ -2,7 +2,7 @@
 title: Fibonacci Again
 date: 2016-06-30 13:28:56
 category: hdu
-tags: 数论
+tags: 
 ---
 [题目链接](http://acm.hdu.edu.cn/showproblem.php?pid=1021)
 Problem Description

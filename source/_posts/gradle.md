@@ -2,7 +2,7 @@
 title: gradle
 date: 2017-03-06 21:13:10
 category: OFBiz
-tags: gradle
+tags: 
 ---
 
 > [gradle](https://docs.gradle.org/current/userguide/tutorial_gradle_command_line.html)与maven功能相同，区别在于gradle是一个基于编程语言的build框架，maven是xml配置文件。孰好孰坏看你的喜好，编程的当然可以分模块，往上面抽象；xml呢最广泛有很多工具可以配合，而且maven文档写的很好好赞，xml的配置也不错。个人感觉在有IDEA的情况下选择maven；gradle我会在写个人的小程序时使用，牛人和实力雄厚的公司或许会选择gradle，自己去Google一下优劣即可。在学习之前先略一略Groovy哦。

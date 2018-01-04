@@ -2,7 +2,7 @@
 title: stirling数
 date: 2016-06-25 16:35:51
 category: hdu
-tags: 组合数学
+tags:
 ---
 [题目链接](http://acm.hdu.edu.cn/game/entry/problem/show.php?chapterid=2&sectionid=2&problemid=11)
 Examining the Rooms
