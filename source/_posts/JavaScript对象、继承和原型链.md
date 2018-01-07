@@ -61,15 +61,51 @@ function User(first, last){
     this.first = first;
     this.last = last;
 }
-User.prototype = {
-    getFullName: function(){
+User.prototype.getFullName = function(){
         return this.first + " " + this.last;
-    },
-    getLastName: function(){
+};
+User.prototype.getLastName = function(){
         return this.last;
-    }
 };
 var him = new User("wang", "yang");
 console.log(him.getFullName())
 ```
 可能就是因为所有 new User 的对象的原型都指向同一个对象，所以这些 new 出来的对象就不必每个都单独加载 getFullName、getLastName 方法了吧。
+这里有更专业的解释[Class-based vs. prototype-based languages](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Details_of_the_Object_Model)
+
+## 原型链
+从上面的链接中可以看出 prototype-base 的 JavaScript 一些独特的性质，
+1. 单继承；一个对象的原型只有一个。
+2. 运行时对象的属性可以动态增减。
+
+## 闭包
+闭包更像是一个拥有字段和方法的对象实例。
+[阮一峰](http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html)
+[MDN Closure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
+```js
+v = 'global';
+var t = {
+    v: 'local',
+    f: function(){
+        return function(){
+            return this.v;
+        }
+    }
+};
+console.log(t.f()())
+```
+f 是 t 的方法，它返回的是一个方法。由于这个返回的方法是在外部被调用，并且 this 关键字会随调用上下文发生变化，所以才会打印 global （this在严格模式下为 undefined,非严格模式下为全局对象）
+```js
+v = 'global';
+var t = {
+    v: 'local',
+    f: function(){
+        var that = this;
+        return function(){
+            return that.v;
+        }
+    }
+};
+console.log(t.f()())
+```
+虽然这里也是在外部调用，但是返回值的函数定义上下文的 that 没有被垃圾回收，它指向 t，所以打印的是 local
