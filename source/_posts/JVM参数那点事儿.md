@@ -6,7 +6,7 @@ tags:
 ---
 [JVM参数](https://www.cnblogs.com/edwardlauxh/archive/2010/04/25/1918603.html)
 [JVM参数](https://www.cnblogs.com/redcreen/archive/2011/05/04/2037057.html)
-
+[美团点评JVM调优实例](https://mp.weixin.qq.com/s?__biz=MjM5NjQ5MTI5OA==&mid=2651747273&idx=1&sn=7f947064a41eeecb6816a5d0838581ae&chksm=bd12aa848a65239289d5c39264e89bd175f377f6554bfe93b37ad6498cf13deff356333c5398&mpshare=1&scene=1&srcid=0108Pp81UenqcrqRmaMO1QNW&pass_ticket=w9AQASPqUnr1vwbOOlNXlTVA9QD8RoqlKcW5%2FRGKjfiKy9ShiDmnCQTcz4Z2UZQi#rd)
 ### JVM内存模型
 在jdk8之前，JVM的内存模型是这个样子的：
 ![](/blog/2017/11/18/JVM%E5%8F%82%E6%95%B0%E9%82%A3%E7%82%B9%E4%BA%8B%E5%84%BF/mem.svg)
