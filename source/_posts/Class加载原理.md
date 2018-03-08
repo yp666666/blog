@@ -105,7 +105,7 @@ public class MyClassLoader extends ClassLoader{
     }
 }
 ```
-> <<Java语言规范>>给出了详细的loading,linking,initialization处理过程.
+> `<<Java语言规范>>`给出了详细的loading,linking,initialization处理过程.
 
 基本的就是以上这些,根据这个可以看看第二篇文章,为什么两个classloader加载的类可以cast,试试找出原因,让它们不能cast.如果你能够使这个示例报错,说明你已经掌握了classloader的原理了.
 忽然看到开头的疑问,本来是想通过了解ClassLoader来解释内部类加载的问题.内部类的加载看来要分开分析了.
