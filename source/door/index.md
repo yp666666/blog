@@ -35,7 +35,7 @@ date: 2017-03-02 22:38:35
 	}
 </script>
 
-<iframe id="weather_iframe" scrolling="no" frameborder="0" style="z-index: 99999; width:100%; height:32px; border: 0px none;" src="http://c3c6.com/app/weather/tianqi/index.html"></iframe>
+<!-- <iframe id="weather_iframe" scrolling="no" frameborder="0" style="z-index: 99999; width:100%; height:32px; border: 0px none;" src="http://c3c6.com/app/weather/tianqi/index.html"></iframe> -->
 <center><h1>拒绝广告</h1></center>
 <form class="form-inline">
 	<div class="form-group">
