@@ -89,3 +89,100 @@ public class FastBytesToInts {
     }
 }
 ```
+### offset & sizeof
+[Unsafe的sizeOf](http://mishadoff.com/blog/java-magic-part-4-sun-dot-misc-dot-unsafe/)
+```java
+package test;
+
+import sun.misc.Unsafe;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.HashSet;
+
+
+public class Test {
+
+    static Unsafe unsafe;
+
+    static {
+        try {
+            Field field = Unsafe.class.getDeclaredField("theUnsafe");
+            field.setAccessible(true);
+            unsafe = (Unsafe) field.get(null);
+        } catch (Exception e) {
+            throw new Error(e);
+        }
+    }
+
+    public static void main(String[] args) throws IllegalAccessException, NoSuchFieldException {
+        System.out.println("offset");
+        System.out.println(offset(Byte.class, "value"));//12
+        System.out.println(offset(Integer.class, "value"));//12
+        System.out.println(offset(Long.class, "value"));//16
+        System.out.println("sizeof");
+        System.out.println(sizeof((byte) 0xff));//Byte, 16
+        System.out.println(sizeof(0));//Integer, 16
+        System.out.println(sizeof(0l));//Long, 24
+    }
+
+    public static long offset(Class c, String fieldName) throws NoSuchFieldException {
+        return unsafe.objectFieldOffset(c.getDeclaredField(fieldName));
+    }
+
+    public static long sizeof(Object o) {
+        Unsafe u = unsafe;
+        HashSet<Field> fields = new HashSet<>();
+        Class c = o.getClass();
+        while (c != Object.class) {
+            for (Field f : c.getDeclaredFields()) {
+                if ((f.getModifiers() & Modifier.STATIC) == 0) {
+                    fields.add(f);
+                }
+            }
+            c = c.getSuperclass();
+        }
+
+        // get offset
+        long maxSize = 0;
+        for (Field f : fields) {
+            long offset = u.objectFieldOffset(f);
+            if (offset > maxSize) {
+                maxSize = offset;
+            }
+        }
+        //取最大偏移量然后这样计算就是Object的内存大小？？？
+        return ((maxSize / 8) + 1) * 8;   // padding
+    }
+}
+```
+另一种计算sizeof的方式
+[Instrumentation的sizeOf](https://stackoverflow.com/questions/52353/in-java-what-is-the-best-way-to-determine-the-size-of-an-object)
+
+```java
+import test.Test;
+
+/**
+ * @author hero
+ */
+public class C {
+    private int x;
+    private long y;
+
+    public static void main(String[] args) {
+        System.out.println(ObjectSizeFetcher.getObjectSize(0));//16
+        System.out.println(ObjectSizeFetcher.getObjectSize(0L));//24
+        System.out.println(ObjectSizeFetcher.getObjectSize(new C()));//24
+
+        System.out.println(Test.sizeof(0));//16
+        System.out.println(Test.sizeof(0L));//24
+        System.out.println(Test.sizeof(new C()));//24
+
+        System.out.println(Test.offset(C.class, "x"));//12
+        System.out.println(Test.offset(C.class, "y"));//16
+    }
+}
+
+```
+两种方法结果一样，但是这也不能解释为什么对象C的大小是24个字节吧。Java的sizeof也就这样了，它的计算意义不大，因为Java对象的字段有的是static，有的是共享缓存对象：IntegerCache的[-128, 127]，你很难分清哪些是共享了同一个instance。
+x在C中的偏移量就是x到C实例所在内存区域开始处相差的字节数。通过偏移量可看出y与x相差4个字节，正好是int的字节个数。
