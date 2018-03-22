@@ -6,6 +6,17 @@ tags:
 ---
 >不看[TLCL](http://linuxcommand.org/index.php),学会shell script也惘然！
 
+#### windows文件转unix文件
+```sh
+sed -i 's/^M//g' file
+```
+^M=Ctrl+v,Ctrl+m
+
+#### vi 全部替换
+```sh
+:%s/old/new/g
+```
+
 #### 重定向
 ```
 0 标准输入
@@ -76,6 +87,38 @@ set -x    # turn on tracing
 set +x    # turn off tracing
 
 ```
+
+#### 字符串截取
+```sh
+截取URL：
+s=http://www.xxx.com//123
+# 1.从左边开始删除第一个//及左边所有字符
+echo ${s#*//}
+# 2.从左边开始删除最后一个//及左边所有字符
+echo ${s##*//}
+# 3.从右边开始删除第一个//及右边所有字符
+echo ${s%//*}
+# 4.从右边开始删除最后一个//及右边所有字符
+echo ${s%%//*}
+```
+例子
+```sh
+## s.sh
+s="http://www.fuck.com//123//4/5"
+echo $s
+echo ${s#*/}
+echo ${s##*/}
+echo ${s%/*}
+echo ${s%%/*}
+
+结果：
+http://www.fuck.com//123//4/5
+/www.fuck.com//123//4/5
+5
+http://www.fuck.com//123//4
+http:
+```
+
 
 #### 数据提取
 文件f1
@@ -166,6 +209,15 @@ jack 2016 6 0.31
 李四 2017 5 0.56
 李四 2017 9 0.43
 注：每人每个月加班时长，单位(天)
+
+awk printf打印单引号：
+```sh
+awk '{printf("'\''%s'\''", $1)}' txt
+```
+awk 字符串匹配
+```sh
+awk '{if($0/regExp/)printf("%s", $0)}' file
+```
 
 #### 随即字符串和数字
 生成不大于120的正整数
