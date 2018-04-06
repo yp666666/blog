@@ -10,3 +10,10 @@ cnpm install
 升级模块 cnpm update/upgrade [-g] [module-name]
 
 
+设置分页
+vi node_modules/hexo-generator-archive/index.js
+vi node_modules/hexo-generator-category/index.js
+vi node_modules/hexo-generator-tag/index.js
+
+
+
