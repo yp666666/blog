@@ -2,7 +2,7 @@
 title: mysql server
 date: 2018-04-06 19:21:31
 category: 系统配置
-tags:
+tags: MySQL
 ---
 #### 忘记 root 密码
 > mysql server version : 5.7.9+
@@ -30,7 +30,19 @@ mysql -u _mysql
 grant all privileges on *.* to 'root'@'%' identified by 'password' with grant option;
 
 
+#### 数据迁移
+##### 导出工具
+###### mysqldump
+1. 导出 sql
+mysqldump -hhost -uroot -ppassword --single-transaction schema table -r table.txt
+2. 导出 tab
+mysqldump -hhost -uroot -ppassword --tab=/Users/hero/tmp --fields-terminated-by='^!' --lines-terminated-by='\n' --single-transaction schema table
 
-
+##### 比较工具 
+```
+mysqldbcompare --server1=root:密码@IP:3306 --server2=root:passwd@ip:3306 --difftype=sql schema1:schema2
+```
+ 如果schema含有非字母字符，
+ --difftype=sql "\`nh-rel-x\`:\`nh-rel-x\`" --run-all-tests > ~/tmp/res.txt
 
 
