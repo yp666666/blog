@@ -2,7 +2,7 @@
 title: stirling数
 date: 2016-06-25 16:35:51
 category: hdu
-tags:
+tags: 递归
 ---
 [题目链接](http://acm.hdu.edu.cn/game/entry/problem/show.php?chapterid=2&sectionid=2&problemid=11)
 Examining the Rooms
@@ -76,6 +76,79 @@ stirling数可以解决n个房间k个闭环的问题.
 
 > 本题第一扇门不能砸, 所以要减去第一扇门独自成环的情况
 
+```java
+import java.io.*;
+
+/**
+ * @author hero
+ */
+public class Main implements Runnable {
+
+    public void solve() {
+        int MAX = 21;
+        long[][] stirling = new long[MAX][MAX];
+        long[] fact = new long[MAX];  //factorial
+        stirling[1][1] = 1;
+        fact[1] = 1;
+        for (int n = 2; n < MAX; n++) {
+            fact[n] = n * fact[n - 1];
+            stirling[n][n] = 1;
+            for (int k = 1; k < n; k++) {
+                stirling[n][k] = stirling[n - 1][k - 1] + (n - 1) * stirling[n - 1][k];
+            }
+        }
+        int N = nextInt();
+        while (N-- > 0) {
+            int n = nextInt(), k = nextInt();
+            long cnt = 0;
+            for (int i = 1; i <= k; i++) {
+                cnt += stirling[n][i] - stirling[n - 1][i - 1];
+            }
+            double res = (double) cnt / fact[n];
+            out.format("%.4f%n", res);
+        }
+    }
+
+    public static void main(String[] args) {
+        new Main().run();
+    }
+
+    @Override
+    public void run() {
+        init();
+        solve();
+        out.flush();
+    }
+
+    StreamTokenizer in;
+    PrintWriter out;
+
+    public void init() {
+        in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
+        out = new PrintWriter(new OutputStreamWriter(System.out));
+    }
+
+
+    public int nextInt() {
+        try {
+            in.nextToken();
+            return (int) in.nval;
+        } catch (IOException e) {
+            throw new Error(e);
+        }
+    }
+
+    public String nextString() {
+        try {
+            in.nextToken();
+            return in.sval;
+        } catch (IOException e) {
+            throw new Error(e);
+        }
+    }
+}
+
+```
 
 ```c
 #include<cstdio>

@@ -2,7 +2,7 @@
 title: nginx
 date: 2017-08-20 21:09:08
 category:
-tags: 
+tags: nginx
 ---
 [官网](http://nginx.org)
 #### 安装步骤

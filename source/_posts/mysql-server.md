@@ -29,7 +29,6 @@ sudo mysqld -uroot &
 mysql -u _mysql
 grant all privileges on *.* to 'root'@'%' identified by 'password' with grant option;
 
-
 #### 数据迁移
 ##### 导出工具
 ###### mysqldump
@@ -65,10 +64,6 @@ create TABLE t_login_log (
         login_datetime datetime
 )ENGINE=INNODB;
 ```
-
-
-
-
 
 
 

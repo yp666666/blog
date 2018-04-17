@@ -22,3 +22,20 @@ override  **User settings file**, 在`<mirrors></mirrors>`中添加alimaven.
     </mirror>
   </mirrors>
 ```
+
+pom.xml 配置
+```
+<repositories>  
+        <repository>  
+            <id>alimaven</id>  
+            <name>aliyun maven</name>  
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>  
+            <releases>  
+                <enabled>true</enabled>  
+            </releases>  
+            <snapshots>  
+                <enabled>false</enabled>  
+            </snapshots>  
+        </repository>  
+</repositories>  
+```
