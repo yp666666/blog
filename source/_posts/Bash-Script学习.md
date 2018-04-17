@@ -145,7 +145,7 @@ if (($na != $nb)); then
   echo "diff lines number: $na : $nb"
   exit 1
 fi
-for ((i=1; i<=$na; i++));do
+for ((i=1; i<=$na; i++)); do
   la=`sed -n ${i}p $1`
   lb=`sed -n ${i}p $2`
   if [[ $la != $lb ]]; then
@@ -231,7 +231,7 @@ awk '{printf("'\''%s'\''", $1)}' file
 ```
 awk 正则匹配
 ```sh
-awk '{if($0/regExp/)printf("%s", $0)}' file
+awk '{if($0~/regExp/)printf("%s", $0)}' file
 ```
 文件a中存的key值，文件b中存的‘key value’值，从文件a找b中对应的value：
 ```sh

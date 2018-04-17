@@ -45,4 +45,30 @@ mysqldbcompare --server1=root:密码@IP:3306 --server2=root:passwd@ip:3306 --dif
  如果schema含有非字母字符，
  --difftype=sql "\`nh-rel-x\`:\`nh-rel-x\`" --run-all-tests > ~/tmp/res.txt
 
+#### mm
+`mysql -uroot -pqazwsxedc123 < init.sql`
+init.sql
+```sql
+use mydb;
+#创建用户表
+CREATE TABLE t_user (
+    id INT auto_increment PRIMARY KEY,
+        name VARCHAR(30),
+        password varchar(64),
+        credits INT
+)ENGINE=INNODB;
+#创建登录日志表
+create TABLE t_login_log (
+      id int auto_increment PRIMARY KEY,
+        user_id int,
+        ip varchar(23),
+        login_datetime datetime
+)ENGINE=INNODB;
+```
+
+
+
+
+
+
 
