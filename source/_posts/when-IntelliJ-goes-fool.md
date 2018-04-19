@@ -14,7 +14,10 @@ tags:
 这就是我这次使用IDEA的感受。
 
 建的包‘moc.oreh’在没有mark源文件root时只是作为了一个文件夹的名字！这样idea就死活找不到某个类，提示信息只是‘can not resolve symbol 'moc' ’，懵懂的我可能太较真，关不掉这个提示信息让我无法忍受，所以我尝试了漫长的求知之旅。
-我去`/Applications/IntelliJ IDEA.app/Contents`，`/Users/hero/Library/Preferences/IntelliJIdea2018.1`,`/Users/hero/Library/Caches/IntelliJIdea2018.1/caches` 各个目录下备份、删除，才终于发现问题完美的重现，看来并不是配置搞错了，但是idea15的提示信息是如此的简洁，让我摸不到头脑，直到我安装了最新版本的idea，这个提示信息一下子让我明白了原来是两个包名成了一个文件名。
+我去`/Applications/IntelliJ IDEA.app/Contents`，
+`/Users/hero/Library/Preferences/IntelliJIdea2018.1`,
+`/Users/hero/Library/Caches/IntelliJIdea2018.1/caches` 
+各个目录下备份、删除，才终于发现问题完美的重现，看来并不是配置搞错了，但是idea15的提示信息是如此的简洁，让我摸不到头脑，直到我安装了最新版本的idea，这个提示信息一下子让我明白了原来是两个包名成了一个文件名。
 
 从这件事上可以学到：
 1. 工具是如此的便利，但同时它也让你丢失了很多能力。
