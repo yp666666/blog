@@ -33,7 +33,13 @@ grant all privileges on *.* to 'root'@'%' identified by 'password' with grant op
 ##### 导出工具
 ###### mysqldump
 1. 导出 sql
-mysqldump -hhost -uroot -ppassword --single-transaction schema table -r table.txt
+mysqldump -hhost -uroot -ppassword --single-transaction schema table -r dump.sql
+导入：
+```sql
+mysql -uroot -p
+>use databases;
+>source /path/to/dump.sql
+```
 2. 导出 tab
 mysqldump -hhost -uroot -ppassword --tab=/Users/hero/tmp --fields-terminated-by='^!' --lines-terminated-by='\n' --single-transaction schema table
 
@@ -44,6 +50,31 @@ mysqldbcompare --server1=root:密码@IP:3306 --server2=root:passwd@ip:3306 --dif
  如果schema含有非字母字符，
  --difftype=sql "\`nh-rel-x\`:\`nh-rel-x\`" --run-all-tests > ~/tmp/res.txt
 
+#### 比较脚本
+> 场景：在不影响生产的情况下拿A库与B库做比较，A与B分别在两个地方，用otter做了实时同步。但是otter有问题，不知道哪些数据同步有问题，所以需要逐表比对一下。
+
+```sql
+# 取所有表名
+echo `mysql -uuser -ppasswd -hhost <<EOF
+SELECT table_name FROM information_schema.tables where table_schema='nh-rel-x' and table_name like 'nh%' and table_name not like '%_reference';
+EOF` > tables.txt
+
+sed -E -e 's/\t/ /g' -e 's/ +/\n/g' tables.txt | tail -n +2 > alltables.txt
+```
+
+```sql
+#!/bin/bash
+task(){
+  grep "^INSERT" from/$1 > from/$1.ok
+  grep "^INSERT" to/$1 > to/$1.ok
+  diff from/$1.ok to/$1.ok > diff/$1
+}
+
+for i in `cat alltables.txt`; do
+  echo "processing table $i"
+  task $i
+done
+```
 #### mm
 `mysql -uroot -pqazwsxedc123 < init.sql`
 init.sql
