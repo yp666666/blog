@@ -31,6 +31,7 @@ grant all privileges on *.* to 'root'@'%' identified by 'password' with grant op
 
 #### 数据迁移
 ##### 导出工具
+[MySQL数据导出](http://www.runoob.com/mysql/mysql-database-export.html)
 ###### mysqldump
 1. 导出 sql
 ```sql
@@ -98,12 +99,14 @@ done
 
 find diff/ -empty -delete
 
+>report.txt
 tabs=`ls diff/`
 for t in $tabs; do
   shanghai=`grep -c "^<" diff/$t`
   hongkong=`grep -c "^>" diff/$t`
-  echo $t  $shanghai  $hongkong
+  echo $t  $shanghai  $hongkong >> report.txt
 done
+sort -n -k 2 report.txt
 ```
 #### mm
 `mysql -uroot -pqazwsxedc123 < init.sql`

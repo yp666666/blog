@@ -13,9 +13,13 @@ tags:
 zxfspace|carl-zk|legenduper
 
 ##### aliyun更新列表
-dash找出Software & Updates 配置Download from： http://mirrors.aliyun.com/ubuntu
-[sources.list](/blog/2017/08/17/%E4%B8%80%E7%AB%99%E5%BC%8F%E9%85%8D%E7%BD%AEubuntu/sources.list)
-`sudo apt-get update`
+```sh
+cd /etc/apt
+sudo cp source.list source.list.bak
+替换 http://us.archive.ubuntu.com/ubuntu 为 http://mirrors.aliyun.com/ubuntu
+sudo apt-get update
+```
+
 ##### git、zsh、autojump
 `sudo apt-get install git`
 `sudo apt-get install zsh`
