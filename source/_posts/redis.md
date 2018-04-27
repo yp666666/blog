@@ -86,7 +86,7 @@ public class JedisLock {
             try {
                 TimeUnit.MILLISECONDS.sleep(500);
             } catch (InterruptedException e) {
-                //ignore
+                return false;
             }
 
             timeout -= 500;
@@ -105,10 +105,14 @@ public class JedisLock {
 ```
 此锁的特点：
 1. 独占式、不可重入；
-2. tryLock 不响应中断信号，也不修改中断标志；
+2. tryLock 响应中断的方式为直接返回false；
 3. EXPIRED_TIME_IN_SECONDS 为 60，可根据业务场景做相应修改；
 
 为什么会这样设计？
+借助Redis的set实现的锁，旨在于保持Redis高速特性的同时具有一定的并发控制，
+1. 没有重入场景；
+2. 没有wait、notify机制，并且wait具有时效性，可以不响应中断，但是为了方便停服务，所以直接return false；
+3. 为什么不使用set(key, token, "NX")而要给锁加一个过期时间？是因为如果a、b共用一个Redis server，其中a突然挂了，那么a设置的key就永远都不过期，b就永远拿不到这个key的锁。
 
 
 
