@@ -209,7 +209,12 @@ public class JedisLock {
         boolean got = tryLock(key, token, jedis);
 
         while (!got && timeout > 0) {
-            got = lock(key, token, jedis);
+            try {
+                TimeUnit.MILLISECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                return false;
+            }
+            got = tryLock(key, token, jedis);
             timeout -= INTERVAL_IN_MILLIS;
         }
         return got;
@@ -254,7 +259,7 @@ Jedis jedis = pool.getResource();
 small、easy to use.
 
 [redis client redisson](https://github.com/redisson/redisson)
-感觉就像是对着jdk的API重写了一遍Redis版的实现一样。为了实现tryLock(time, timeUnit)接口，它在内部使用了Redis的pub/sub框架，虽然原本我也想这么搞来着，但是这样的实现太“重”，现有业务暂时用不到。
+感觉就像是对着jdk的API重写了一遍Redis版的实现一样。为了实现tryLock(time, timeUnit)接口，它在内部使用了Redis的pub/sub框架，这样就可以实现wait/notify机制，虽然原本我也想这么搞来着，但是这样的实现太“重”，现有业务暂时用不到。
 
 [redis client lettuce-core](https://github.com/lettuce-io/lettuce-core)
 看粉丝的数量远不如redisson，但是它跟redisson的功能不同，它更适合事件驱动的应用，底层用了netty。事件驱动的应用最适合用它了。
