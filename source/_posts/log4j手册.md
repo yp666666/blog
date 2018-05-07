@@ -44,18 +44,32 @@ tags: log4j2
 </dependency>
 ```
 #### xml配置文件
+日志打印级别
+```
+OFF (most specific, no logging)
+FATAL (most specific, little data)
+ERROR
+WARN
+INFO
+DEBUG
+TRACE (least specific, a lot of data)
+ALL (least specific, all data)
+```
 默认在classpath下，log4j2-test.xml
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
+    <Properties>
+        <Property name="LOG_LEVEL" value="WARN"/>
+    </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%-5level %d{yy-MM-dd HH:mm:ss.SSS} [%t] %logger{36} - %msg%n"/>
         </Console>
     </Appenders>
     <Loggers>
-        <Root level="debug">
-            <AppenderRef ref="Console"/>
+        <Root level="INFO">
+            <AppenderRef ref="Console" level="${LOG_LEVEL}"/>
         </Root>
     </Loggers>
 </Configuration>

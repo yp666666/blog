@@ -79,7 +79,7 @@ case "$1" in
         ;;
 esac
 ```
-运行起来没有看到pid文件，所以修改了stop分支。
+运行起来没有看到pid文件，所以修改了stop分支。(原来只有daemonize yes时才有pid文件)
 
 start
 ```sh
@@ -173,9 +173,9 @@ public class JedisLock {
      * @param key
      * @param token
      * @param jedis
-     * @return always return true
+     * @return 
      */
-    public static boolean lock(String key, String token, Jedis jedis) {
+    public static void lock(String key, String token, Jedis jedis) {
         isValidKey(key, jedis);
         while (!tryLock(key, token, jedis)) {
             try {
@@ -183,7 +183,6 @@ public class JedisLock {
             } catch (InterruptedException e) {
             }
         }
-        return true;
     }
 
     private static void isValidKey(String key, Jedis jedis) {

@@ -14,7 +14,9 @@ sudo find / -name "mysqld"
 ps -ef|grep mysql
 sudo kill -9 pid1 pid2			
 2. 重启
+```
 mysqld_safe --skip-grant-tables &
+```
 3. 登录
 mysql -u root 
 4. 重置密码
@@ -109,7 +111,7 @@ done
 sort -n -k 2 report.txt
 ```
 #### mm
-`mysql -uroot -pqazwsxedc123 < init.sql`
+`mysql -uroot -ppassword < init.sql`
 init.sql
 ```sql
 use mydb;

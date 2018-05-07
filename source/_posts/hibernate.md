@@ -5,6 +5,7 @@ category:
 tags: hibernate
 ---
 # hibernate 结果集映射
+[http://peijunlin2008.iteye.com/blog/1269266](http://peijunlin2008.iteye.com/blog/1269266)
 ## Result -> Map
 ```java
 List<Map> phoneCallTotalDurations = entityManager.createQuery(
@@ -20,8 +21,7 @@ List<Map> phoneCallTotalDurations = entityManager.createQuery(
 ```
 
 需要注意的点：
-1. 凡是数字类型都是`BigDecimal`，布尔类型成了`Integer`，如：*BigInteger id = (BigInteger) item.get("id")*；
-2. like 的写法；
+like 的写法；(in的写法类似：key in (:scope))
 ```java
 import org.hibernate.SQLQuery;
 import org.hibernate.transform.Transformers;
