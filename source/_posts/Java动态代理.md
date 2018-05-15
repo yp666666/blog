@@ -2,7 +2,7 @@
 title: Java动态代理
 date: 2018-05-12 08:46:13
 category: java
-tags:
+tags: spring
 ---
 ## JDK原生动态代理
 http://www.cnblogs.com/xiaoluo501395377/p/3383130.html
