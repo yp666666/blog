@@ -134,7 +134,7 @@ for i in `ls ids/`; do
     else
      schema=$SHANG
     fi
-    echo "mysqldump -hlocalhost -uroot -ppasswd --single-transactione2 $schema $i --where=\"id=$id\" >> jiou/$i" >> batch.sql
+    echo "mysqldump -hlocalhost -uroot -ppasswd --single-transaction $schema $i --where=\"id=$id\" >> jiou/$i" >> batch.sql
   done < ids/$i
 done
 
