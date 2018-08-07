@@ -188,3 +188,6 @@ public class MyBeanUtils extends BeanUtils {
 }
 ```
 
+类似工具：
+[https://github.com/DozerMapper/dozer/](https://github.com/DozerMapper/dozer/)
+不同点在于可以配置映射的字段名。
