@@ -2,7 +2,7 @@
 title: mysql 中文乱码
 date: 2018-09-14 15:42:50
 category:
-tags:
+tags: MySQL
 ---
 
 https://blog.csdn.net/blueheart20/article/details/52385142
