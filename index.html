@@ -81,24 +81,82 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/blog/2019/02/19/java-html-template-tool/" title="Java Html Template Tool" itemprop="url">Java Html Template Tool</a>
+      <a href="/blog/2019/03/18/understanding-oauth2/" title="Understanding-Oauth2" itemprop="url">Understanding-Oauth2</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/blog/about" title="carl-zk" target="_blank" itemprop="author">carl-zk</a>
 		
   </p><p class="article-time">
-    <time datetime="2019-02-18T16:12:35.000Z" itemprop="datePublished"> 发表于 2019-02-19</time>
+    <time datetime="2019-03-18T12:53:12.000Z" itemprop="datePublished"> 发表于 2019-03-18</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <p>一个好用的处理 html template 的工具：<br><a href="https://freemarker.apache.org/docs/pgui_quickstart_all.html" target="_blank" rel="noopener">freemarker</a></p>
-<p>hello.ftlh<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Welcome!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">#--</span> <span class="attr">Greet</span> <span class="attr">the</span> <span class="attr">user</span> <span class="attr">with</span> <span class="attr">his</span>/<span class="attr">her</span> <span class="attr">name</span> <span class="attr">--</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome $&#123;user&#125;!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>We have these animals:</span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">#list</span> <span class="attr">animals</span> <span class="attr">as</span> <span class="attr">animal</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>$&#123;animal.name&#125; for $&#123;animal.price&#125; Euros</span><br><span class="line">    <span class="tag">&lt;/<span class="name">#list</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> freemarker.template.Configuration;</span><br><span class="line"><span class="keyword">import</span> freemarker.template.Template;</span><br><span class="line"><span class="keyword">import</span> freemarker.template.TemplateException;</span><br><span class="line"><span class="keyword">import</span> freemarker.template.TemplateExceptionHandler;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStreamWriter;</span><br><span class="line"><span class="keyword">import</span> java.io.Writer;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TemplateException </span>&#123;</span><br><span class="line">        Configuration cfg = <span class="keyword">new</span> Configuration(Configuration.VERSION_2_3_28);</span><br><span class="line">        cfg.setDirectoryForTemplateLoading(<span class="keyword">new</span> File(<span class="string">"/Users/carl/workspace/freemarker/src/main/resources/templates"</span>));</span><br><span class="line">        cfg.setDefaultEncoding(<span class="string">"UTF-8"</span>);</span><br><span class="line">        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.HTML_DEBUG_HANDLER);</span><br><span class="line">        cfg.setLogTemplateExceptions(<span class="keyword">false</span>);</span><br><span class="line">        cfg.setWrapUncheckedExceptions(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">        Template temp = cfg.getTemplate(<span class="string">"hello.ftlh"</span>);</span><br><span class="line"></span><br><span class="line">        DataModel root = <span class="keyword">new</span> DataModel();</span><br><span class="line"></span><br><span class="line">        root.setUser(<span class="string">"小红"</span>);</span><br><span class="line"></span><br><span class="line">        List&lt;Animal&gt; animals = <span class="keyword">new</span> LinkedList&lt;Animal&gt;();</span><br><span class="line">        animals.add(<span class="keyword">new</span> Animal(<span class="string">"a"</span>, <span class="string">"12"</span>));</span><br><span class="line">        animals.add(<span class="keyword">new</span> Animal(<span class="string">"b"</span>, <span class="string">"12"</span>));</span><br><span class="line"></span><br><span class="line">        root.setAnimals(animals);</span><br><span class="line"></span><br><span class="line">        Writer out = <span class="keyword">new</span> OutputStreamWriter(System.out);</span><br><span class="line">        temp.process(root, out);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>console:<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;Welcome!&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;Welcome 小红!&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;We have these animals:</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">      &lt;li&gt;a <span class="keyword">for</span> 12 Euros</span><br><span class="line">      &lt;li&gt;b <span class="keyword">for</span> 12 Euros</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
-<p><a href="https://github.com/carl-zk/JavaJava/tree/master/freemarker">code</a></p>
+        <blockquote>
+<p>头一次尝试翻译一篇文章，不准确处请指正，谢谢！</p>
+</blockquote>
+<p>Source: <a href="http://www.bubblecode.net/en/2016/01/22/understanding-oauth2/" target="_blank" rel="noopener">http://www.bubblecode.net/en/2016/01/22/understanding-oauth2/</a><br>如果OAuth2对你来说仍是一个模糊的概念或者你只想验证一下自己理解的是否准确，那么这篇文章就是为你准备的。</p>
+<h2 id="什么是-OAuth2"><a href="#什么是-OAuth2" class="headerlink" title="什么是 OAuth2?"></a>什么是 OAuth2?</h2><p><a href="https://oauth.net/2/" target="_blank" rel="noopener">OAuth2</a> 就是，你可以先猜一下，the OAuth Protocol (also called framework) 的第2版。<br>此协议允许第三方应用程序代表资源所有者授予对HTTP服务的有限访问权限，或允许第三方应用程序代表自己获取访问权限。访问权限由客户端（client）发起，它可以是一个网站或手机应用等。<br>第2版协议致力于简化上一版本并促进不同应用间的交互。<br>规范(<a href="https://tools.ietf.org/html/rfc6749" target="_blank" rel="noopener">Specifications</a>) 仍处于起草期并且在不断被完善，但这并不能阻止它被实现并受到互联网大佬的青睐，像 Google、Facebook。</p>
+<blockquote>
+<p>译者注：很好奇 spring-security-oauth2 是对 RFC 哪个版本的实现，大概是 6749和6750 版，最新的更新是 8252 版（for Native Apps），不知道区别在哪里。</p>
+</blockquote>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="Roles（角色）"><a href="#Roles（角色）" class="headerlink" title="Roles（角色）"></a>Roles（角色）</h3><p>OAuth2 定义了4种角色：</p>
+<ul>
+<li>资源所属者（Resource Owner）：一般指你自己。</li>
+<li>资源服务器（Resource Server）：托管（你的）私有数据的服务器（比如托管你个人资料和信息的Google）。</li>
+<li>客户端（Client）：向资源服务器发起请求的应用（PHP 网站、Javascript 应用或手机应用）。</li>
+<li>授权服务器（Authorization Server）：向客户端下发token的服务器。这个token可以让客户端访问资源服务器。This server can be the same as the authorization server (same physical server and same application), and it is often the case.（不知道这句怎么翻译）</li>
+</ul>
+<h3 id="Tokens"><a href="#Tokens" class="headerlink" title="Tokens"></a>Tokens</h3><p>Tokens 是授权服务器随机生成的字符串，当客户端来请求时下发的。<br>Token 分为两种：</p>
+<ul>
+<li>Access Token：这个非常重要，因为它可以让第三方应用访问资源服务器上的用户数据。它放在客户端请求的Header或参数中。它不是永久的，授权服务器会规定它的过期时间。通常要尽可能保证它不被泄露，但这又很难做到，尤其是客户端是web浏览器而且是用JavaScript去请求。</li>
+<li>Refresh Token：这个token会跟Access Token一起下发，但不同于后者，不是客户端每次发起请求到资源服务器都会携带。它只是用来当Access Token过期时客户端向授权服务器获取新的Access Token。出于安全考虑，可能并不会获取到Refresh Token，我们后面会讲到时在什么场景下拿不到它。</li>
+</ul>
+<h3 id="Access-Token-scope（AT-作用范围）"><a href="#Access-Token-scope（AT-作用范围）" class="headerlink" title="Access Token scope（AT 作用范围）"></a>Access Token scope（AT 作用范围）</h3><p>作用范围是指Access token有哪些访问权限。授权服务器会定义一个作用范围列表。客户端必须指定它所请求的范围。所申请的范围越小，被授权的几率就越大。</p>
+<blockquote>
+<p>更多：<a href="http://tools.ietf.org/html/rfc6749#section-3.3" target="_blank" rel="noopener">http://tools.ietf.org/html/rfc6749#section-3.3</a></p>
+</blockquote>
+<h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><p>OAuth2 要求客户端和授权服务器之间使用HTTPS协议，因为会有敏感信息（tokens或证书等）。事实上并没有强制你这样做，但你要知道不这样会有很大的安全漏洞。</p>
+<h2 id="注册成为客户端"><a href="#注册成为客户端" class="headerlink" title="注册成为客户端"></a>注册成为客户端</h2><p>既然你想通过OAuth2从资源服务器访问数据，你首先要向授权服务器注册成为一个客户端。<br>每个提供者都可以自由实现这一点。OAuth2只是定义了客户端必须的参数和授权服务器返回的参数。<br>下面是规定的参数：<br><strong>客户端注册</strong></p>
+<ul>
+<li>应用名字：即客户端应用名。</li>
+<li>跳转URLs：收到authorization code和access token后客户端的跳转地址。</li>
+<li>授权类型（Grant Type(s)）：客户端申请的授权类型。</li>
+<li>Javascript Origin (可选)：通过XMLHttpRequest访问资源服务器时指定的hostname。</li>
+</ul>
+<p><strong>授权服务器返回</strong></p>
+<ul>
+<li>客户端ID（Client Id）：唯一的随机字符串。</li>
+<li>客户端秘钥 (Client Secret)：必须保密的秘钥。<blockquote>
+<p>更多：<a href="https://tools.ietf.org/html/rfc6749#section-2" target="_blank" rel="noopener">RFC 6749 — Client Registration</a></p>
+</blockquote>
+</li>
+</ul>
+<h2 id="授权类型"><a href="#授权类型" class="headerlink" title="授权类型"></a>授权类型</h2><p>根据客户端的位置和性质，OAuth2定义了4种类型。</p>
+<h3 id="授权码类型（Authorization-Code-Grant）"><a href="#授权码类型（Authorization-Code-Grant）" class="headerlink" title="授权码类型（Authorization Code Grant）"></a>授权码类型（Authorization Code Grant）</h3><ol>
+<li>何时应使用？<br>当客户端是web服务器时应该使用。它允许你获取一个长期有效的token，因为你可以用refresh token去刷新它（如果授权服务器允许的话）。</li>
+<li>例如：</li>
+</ol>
+<ul>
+<li>资源拥有者：你。</li>
+<li>资源服务器：a Google Server.</li>
+<li>客户端：任何web服务器。</li>
+<li>授权服务器：a Google Server.</li>
+</ul>
+<ol start="3">
+<li>场景：<ol>
+<li>一个web应用想要获取你的Google信息。</li>
+<li>你在此web应用上被跳转到Google的授权页面。</li>
+<li>如果你点允许，Google会发一个authorization code给web的回调接口。</li>
+<li>然后，web应用用这个code从认证服务器（Google）获取一个access token。</li>
+<li>web应用这时可以通过access token访问资源服务器（Google）上的你的资料。  </li>
+</ol>
+</li>
+</ol>
+<p>你并不能见到access token，它会被保存在web（例如session）中。Google还会发送其他信息，比如token过期时间甚至一个refresh token.<br>这是个理想的场景，并且相对安全点，因为access token没有在client端（web浏览器）传递。</p>
+<h3 id="Implicit-Grant"><a href="#Implicit-Grant" class="headerlink" title="Implicit Grant"></a>Implicit Grant</h3><h3 id="Resource-Owner-Password-Credentials-Grant"><a href="#Resource-Owner-Password-Credentials-Grant" class="headerlink" title="Resource Owner Password Credentials Grant"></a>Resource Owner Password Credentials Grant</h3><h3 id="Client-Credentials-Grant"><a href="#Client-Credentials-Grant" class="headerlink" title="Client Credentials Grant"></a>Client Credentials Grant</h3><h2 id="Access-token-usage"><a href="#Access-token-usage" class="headerlink" title="Access token usage"></a>Access token usage</h2><h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><p><a href="https://tools.ietf.org/id/draft-ietf-oauth-security-topics-06.html" target="_blank" rel="noopener">OAuth 2.0 Security Best Current Practice</a><br><a href="https://pattern-match.com/blog/2018/10/17/springboot2-with-oauth2-integration/" target="_blank" rel="noopener">springboot2-with-oauth2-integration</a><br><a href="https://spring.io/guides/tutorials/spring-boot-oauth2/" target="_blank" rel="noopener">Spring Boot and OAuth2</a></p>
 
         
         
@@ -109,11 +167,11 @@
     <footer class="article-footer clearfix">
 <div class="article-catetags">
 
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/blog/categories/java/">java</a>
-</div>
 
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/oauth2/">oauth2</a>
+  </div>
 
 </div>
 
@@ -136,7 +194,7 @@
 
 
   <nav id="page-nav" class="clearfix">
-    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/170/">170</a><a class="extend next" rel="next" href="/blog/page/2/">Next<span></span></a>
+    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/blog/page/171/">171</a><a class="extend next" rel="next" href="/blog/page/2/">Next<span></span></a>
   </nav>
 
 </div>
@@ -224,11 +282,11 @@
 			
 		
 			
-				<li><a href="/blog/tags/weblogic/" title="weblogic">weblogic<sup>2</sup></a></li>
+				<li><a href="/blog/tags/python/" title="python">python<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/blog/tags/python/" title="python">python<sup>2</sup></a></li>
+				<li><a href="/blog/tags/weblogic/" title="weblogic">weblogic<sup>2</sup></a></li>
 			
 		
 			
@@ -240,11 +298,11 @@
 			
 		
 			
-				<li><a href="/blog/tags/redis/" title="redis">redis<sup>1</sup></a></li>
+				<li><a href="/blog/tags/shell/" title="shell">shell<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/blog/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+				<li><a href="/blog/tags/oauth2/" title="oauth2">oauth2<sup>1</sup></a></li>
 			
 		
 			
@@ -267,6 +325,8 @@
 				<li><a href="/blog/tags/nginx/" title="nginx">nginx<sup>1</sup></a></li>
 			
 		
+			
+				<li><a href="/blog/tags/redis/" title="redis">redis<sup>1</sup></a></li>
 			
 		
 		</ul>

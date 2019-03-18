@@ -1,0 +1,637 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  
+    <title>Understanding-Oauth2 | 一叶轻舟渡万江</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="carl-zk">
+    
+
+    
+    <meta name="description" content="头一次尝试翻译一篇文章，不准确处请指正，谢谢！  Source: http://www.bubblecode.net/en/2016/01/22/understanding-oauth2/如果OAuth2对你来说仍是一个模糊的概念或者你只想验证一下自己理解的是否准确，那么这篇文章就是为你准备的。 什么是 OAuth2?OAuth2 就是，你可以先猜一下，the OAuth Protocol (a">
+<meta name="keywords" content="oauth2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Understanding-Oauth2">
+<meta property="og:url" content="https://github.com/carl-zk/blog/2019/03/18/understanding-oauth2/index.html">
+<meta property="og:site_name" content="一叶轻舟渡万江">
+<meta property="og:description" content="头一次尝试翻译一篇文章，不准确处请指正，谢谢！  Source: http://www.bubblecode.net/en/2016/01/22/understanding-oauth2/如果OAuth2对你来说仍是一个模糊的概念或者你只想验证一下自己理解的是否准确，那么这篇文章就是为你准备的。 什么是 OAuth2?OAuth2 就是，你可以先猜一下，the OAuth Protocol (a">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-18T15:41:03.495Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Understanding-Oauth2">
+<meta name="twitter:description" content="头一次尝试翻译一篇文章，不准确处请指正，谢谢！  Source: http://www.bubblecode.net/en/2016/01/22/understanding-oauth2/如果OAuth2对你来说仍是一个模糊的概念或者你只想验证一下自己理解的是否准确，那么这篇文章就是为你准备的。 什么是 OAuth2?OAuth2 就是，你可以先猜一下，the OAuth Protocol (a">
+
+    
+    <link rel="alternative" href="/atom.xml" title="一叶轻舟渡万江" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/blog/img/favicon2.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/blog/img/tx2.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/blog/img/tx2.jpg">
+    
+    <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/blog/"><img src="/blog/img/fav.png" alt="一叶轻舟渡万江" title="一叶轻舟渡万江"></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/blog/" title="一叶轻舟渡万江">一叶轻舟渡万江</a></h1>
+				<h2 class="blog-motto">泰山不拒细壤故能成其高 江海不择细流故能就其深</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/blog/">主页</a></li>
+					
+						<li><a href="/blog/archives">归档</a></li>
+					
+						<li><a href="/blog/about">关于</a></li>
+					
+						<li><a href="/blog/door">门户</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索">
+						<input type="hidden" name="q" value="site:github.com/carl-zk/blog">
+					</form>
+					
+					</li>
+				</ul>
+			</ul></nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2019/03/18/understanding-oauth2/" title="Understanding-Oauth2" itemprop="url">Understanding-Oauth2</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="carl-zk" target="_blank" itemprop="author">carl-zk</a>
+		
+  </p><p class="article-time">
+    <time datetime="2019-03-18T12:53:12.000Z" itemprop="datePublished"> 发表于 2019-03-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是-OAuth2"><span class="toc-number">1.</span> <span class="toc-text">什么是 OAuth2?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础知识"><span class="toc-number">2.</span> <span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Roles（角色）"><span class="toc-number">2.1.</span> <span class="toc-text">Roles（角色）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tokens"><span class="toc-number">2.2.</span> <span class="toc-text">Tokens</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Access-Token-scope（AT-作用范围）"><span class="toc-number">2.3.</span> <span class="toc-text">Access Token scope（AT 作用范围）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTPS"><span class="toc-number">2.4.</span> <span class="toc-text">HTTPS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注册成为客户端"><span class="toc-number">3.</span> <span class="toc-text">注册成为客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#授权类型"><span class="toc-number">4.</span> <span class="toc-text">授权类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#授权码类型（Authorization-Code-Grant）"><span class="toc-number">4.1.</span> <span class="toc-text">授权码类型（Authorization Code Grant）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implicit-Grant"><span class="toc-number">4.2.</span> <span class="toc-text">Implicit Grant</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Resource-Owner-Password-Credentials-Grant"><span class="toc-number">4.3.</span> <span class="toc-text">Resource Owner Password Credentials Grant</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Client-Credentials-Grant"><span class="toc-number">4.4.</span> <span class="toc-text">Client Credentials Grant</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Access-token-usage"><span class="toc-number">5.</span> <span class="toc-text">Access token usage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Appendix"><span class="toc-number">6.</span> <span class="toc-text">Appendix</span></a></li></ol>
+		
+		</div>
+		
+		<blockquote>
+<p>头一次尝试翻译一篇文章，不准确处请指正，谢谢！</p>
+</blockquote>
+<p>Source: <a href="http://www.bubblecode.net/en/2016/01/22/understanding-oauth2/" target="_blank" rel="noopener">http://www.bubblecode.net/en/2016/01/22/understanding-oauth2/</a><br>如果OAuth2对你来说仍是一个模糊的概念或者你只想验证一下自己理解的是否准确，那么这篇文章就是为你准备的。</p>
+<h2 id="什么是-OAuth2"><a href="#什么是-OAuth2" class="headerlink" title="什么是 OAuth2?"></a>什么是 OAuth2?</h2><p><a href="https://oauth.net/2/" target="_blank" rel="noopener">OAuth2</a> 就是，你可以先猜一下，the OAuth Protocol (also called framework) 的第2版。<br>此协议允许第三方应用程序代表资源所有者授予对HTTP服务的有限访问权限，或允许第三方应用程序代表自己获取访问权限。访问权限由客户端（client）发起，它可以是一个网站或手机应用等。<br>第2版协议致力于简化上一版本并促进不同应用间的交互。<br>规范(<a href="https://tools.ietf.org/html/rfc6749" target="_blank" rel="noopener">Specifications</a>) 仍处于起草期并且在不断被完善，但这并不能阻止它被实现并受到互联网大佬的青睐，像 Google、Facebook。</p>
+<blockquote>
+<p>译者注：很好奇 spring-security-oauth2 是对 RFC 哪个版本的实现，大概是 6749和6750 版，最新的更新是 8252 版（for Native Apps），不知道区别在哪里。</p>
+</blockquote>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="Roles（角色）"><a href="#Roles（角色）" class="headerlink" title="Roles（角色）"></a>Roles（角色）</h3><p>OAuth2 定义了4种角色：</p>
+<ul>
+<li>资源所属者（Resource Owner）：一般指你自己。</li>
+<li>资源服务器（Resource Server）：托管（你的）私有数据的服务器（比如托管你个人资料和信息的Google）。</li>
+<li>客户端（Client）：向资源服务器发起请求的应用（PHP 网站、Javascript 应用或手机应用）。</li>
+<li>授权服务器（Authorization Server）：向客户端下发token的服务器。这个token可以让客户端访问资源服务器。This server can be the same as the authorization server (same physical server and same application), and it is often the case.（不知道这句怎么翻译）</li>
+</ul>
+<h3 id="Tokens"><a href="#Tokens" class="headerlink" title="Tokens"></a>Tokens</h3><p>Tokens 是授权服务器随机生成的字符串，当客户端来请求时下发的。<br>Token 分为两种：</p>
+<ul>
+<li>Access Token：这个非常重要，因为它可以让第三方应用访问资源服务器上的用户数据。它放在客户端请求的Header或参数中。它不是永久的，授权服务器会规定它的过期时间。通常要尽可能保证它不被泄露，但这又很难做到，尤其是客户端是web浏览器而且是用JavaScript去请求。</li>
+<li>Refresh Token：这个token会跟Access Token一起下发，但不同于后者，不是客户端每次发起请求到资源服务器都会携带。它只是用来当Access Token过期时客户端向授权服务器获取新的Access Token。出于安全考虑，可能并不会获取到Refresh Token，我们后面会讲到时在什么场景下拿不到它。</li>
+</ul>
+<h3 id="Access-Token-scope（AT-作用范围）"><a href="#Access-Token-scope（AT-作用范围）" class="headerlink" title="Access Token scope（AT 作用范围）"></a>Access Token scope（AT 作用范围）</h3><p>作用范围是指Access token有哪些访问权限。授权服务器会定义一个作用范围列表。客户端必须指定它所请求的范围。所申请的范围越小，被授权的几率就越大。</p>
+<blockquote>
+<p>更多：<a href="http://tools.ietf.org/html/rfc6749#section-3.3" target="_blank" rel="noopener">http://tools.ietf.org/html/rfc6749#section-3.3</a></p>
+</blockquote>
+<h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><p>OAuth2 要求客户端和授权服务器之间使用HTTPS协议，因为会有敏感信息（tokens或证书等）。事实上并没有强制你这样做，但你要知道不这样会有很大的安全漏洞。</p>
+<h2 id="注册成为客户端"><a href="#注册成为客户端" class="headerlink" title="注册成为客户端"></a>注册成为客户端</h2><p>既然你想通过OAuth2从资源服务器访问数据，你首先要向授权服务器注册成为一个客户端。<br>每个提供者都可以自由实现这一点。OAuth2只是定义了客户端必须的参数和授权服务器返回的参数。<br>下面是规定的参数：<br><strong>客户端注册</strong></p>
+<ul>
+<li>应用名字：即客户端应用名。</li>
+<li>跳转URLs：收到authorization code和access token后客户端的跳转地址。</li>
+<li>授权类型（Grant Type(s)）：客户端申请的授权类型。</li>
+<li>Javascript Origin (可选)：通过XMLHttpRequest访问资源服务器时指定的hostname。</li>
+</ul>
+<p><strong>授权服务器返回</strong></p>
+<ul>
+<li>客户端ID（Client Id）：唯一的随机字符串。</li>
+<li>客户端秘钥 (Client Secret)：必须保密的秘钥。<blockquote>
+<p>更多：<a href="https://tools.ietf.org/html/rfc6749#section-2" target="_blank" rel="noopener">RFC 6749 — Client Registration</a></p>
+</blockquote>
+</li>
+</ul>
+<h2 id="授权类型"><a href="#授权类型" class="headerlink" title="授权类型"></a>授权类型</h2><p>根据客户端的位置和性质，OAuth2定义了4种类型。</p>
+<h3 id="授权码类型（Authorization-Code-Grant）"><a href="#授权码类型（Authorization-Code-Grant）" class="headerlink" title="授权码类型（Authorization Code Grant）"></a>授权码类型（Authorization Code Grant）</h3><ol>
+<li>何时应使用？<br>当客户端是web服务器时应该使用。它允许你获取一个长期有效的token，因为你可以用refresh token去刷新它（如果授权服务器允许的话）。</li>
+<li>例如：</li>
+</ol>
+<ul>
+<li>资源拥有者：你。</li>
+<li>资源服务器：a Google Server.</li>
+<li>客户端：任何web服务器。</li>
+<li>授权服务器：a Google Server.</li>
+</ul>
+<ol start="3">
+<li>场景：<ol>
+<li>一个web应用想要获取你的Google信息。</li>
+<li>你在此web应用上被跳转到Google的授权页面。</li>
+<li>如果你点允许，Google会发一个authorization code给web的回调接口。</li>
+<li>然后，web应用用这个code从认证服务器（Google）获取一个access token。</li>
+<li>web应用这时可以通过access token访问资源服务器（Google）上的你的资料。  </li>
+</ol>
+</li>
+</ol>
+<p>你并不能见到access token，它会被保存在web（例如session）中。Google还会发送其他信息，比如token过期时间甚至一个refresh token.<br>这是个理想的场景，并且相对安全点，因为access token没有在client端（web浏览器）传递。</p>
+<h3 id="Implicit-Grant"><a href="#Implicit-Grant" class="headerlink" title="Implicit Grant"></a>Implicit Grant</h3><h3 id="Resource-Owner-Password-Credentials-Grant"><a href="#Resource-Owner-Password-Credentials-Grant" class="headerlink" title="Resource Owner Password Credentials Grant"></a>Resource Owner Password Credentials Grant</h3><h3 id="Client-Credentials-Grant"><a href="#Client-Credentials-Grant" class="headerlink" title="Client Credentials Grant"></a>Client Credentials Grant</h3><h2 id="Access-token-usage"><a href="#Access-token-usage" class="headerlink" title="Access token usage"></a>Access token usage</h2><h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><p><a href="https://tools.ietf.org/id/draft-ietf-oauth-security-topics-06.html" target="_blank" rel="noopener">OAuth 2.0 Security Best Current Practice</a><br><a href="https://pattern-match.com/blog/2018/10/17/springboot2-with-oauth2-integration/" target="_blank" rel="noopener">springboot2-with-oauth2-integration</a><br><a href="https://spring.io/guides/tutorials/spring-boot-oauth2/" target="_blank" rel="noopener">Spring Boot and OAuth2</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/oauth2/">oauth2</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://github.com/carl-zk/blog/2019/03/18/understanding-oauth2/" data-title="Understanding-Oauth2 | 一叶轻舟渡万江" data-tsina class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/blog/2019/02/19/java-html-template-tool/" title="Java Html Template Tool">
+ <strong>下一篇：</strong><br> 
+ <span>Java Html Template Tool
+</span>
+</a>
+</div>
+
+</nav>
+
+
+<!-- LiveRe City install code -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zMTU5NS84MTU5">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>Please activate JavaScript for write a comment in LiveRe</noscript>
+</div>
+<!-- completed City install code -->
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是-OAuth2"><span class="toc-number">1.</span> <span class="toc-text">什么是 OAuth2?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基础知识"><span class="toc-number">2.</span> <span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Roles（角色）"><span class="toc-number">2.1.</span> <span class="toc-text">Roles（角色）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tokens"><span class="toc-number">2.2.</span> <span class="toc-text">Tokens</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Access-Token-scope（AT-作用范围）"><span class="toc-number">2.3.</span> <span class="toc-text">Access Token scope（AT 作用范围）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTPS"><span class="toc-number">2.4.</span> <span class="toc-text">HTTPS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注册成为客户端"><span class="toc-number">3.</span> <span class="toc-text">注册成为客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#授权类型"><span class="toc-number">4.</span> <span class="toc-text">授权类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#授权码类型（Authorization-Code-Grant）"><span class="toc-number">4.1.</span> <span class="toc-text">授权码类型（Authorization Code Grant）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Implicit-Grant"><span class="toc-number">4.2.</span> <span class="toc-text">Implicit Grant</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Resource-Owner-Password-Credentials-Grant"><span class="toc-number">4.3.</span> <span class="toc-text">Resource Owner Password Credentials Grant</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Client-Credentials-Grant"><span class="toc-number">4.4.</span> <span class="toc-text">Client Credentials Grant</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Access-token-usage"><span class="toc-number">5.</span> <span class="toc-text">Access token usage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Appendix"><span class="toc-number">6.</span> <span class="toc-text">Appendix</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/blog/categories/OFBiz/" title="OFBiz">OFBiz<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/blog/categories/hdu/" title="hdu">hdu<sup>35</sup></a></li>
+		  
+		
+		  
+			<li><a href="/blog/categories/java/" title="java">java<sup>15</sup></a></li>
+		  
+		
+		  
+			<li><a href="/blog/categories/并发编程的艺术/" title="并发编程的艺术">并发编程的艺术<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/blog/categories/数据结构/" title="数据结构">数据结构<sup>15</sup></a></li>
+		  
+		
+		  
+			<li><a href="/blog/categories/系统配置/" title="系统配置">系统配置<sup>11</sup></a></li>
+		  
+		
+		  
+			<li><a href="/blog/categories/设计模式/" title="设计模式">设计模式<sup>24</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/blog/tags/递归/" title="递归">递归<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/oracle/" title="oracle">oracle<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/javascript/" title="javascript">javascript<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/reflect/" title="reflect">reflect<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/MySQL/" title="MySQL">MySQL<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/Servlet/" title="Servlet">Servlet<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/spring/" title="spring">spring<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/python/" title="python">python<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/weblogic/" title="weblogic">weblogic<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/sql/" title="sql">sql<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/docker/" title="docker">docker<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/oauth2/" title="oauth2">oauth2<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/elasticsearch/" title="elasticsearch">elasticsearch<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/hibernate/" title="hibernate">hibernate<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/log4j2/" title="log4j2">log4j2<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/maven/" title="maven">maven<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/nginx/" title="nginx">nginx<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/redis/" title="redis">redis<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.ruanyifeng.com/blog/archives.html" target="_blank" title="阮一峰">阮一峰</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://blog.csdn.net/wo541075754" target="_blank" title="丑胖侠">丑胖侠</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://it.deepinmind.com/index.html" target="_blank" title="deepinmind">deepinmind</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.cnblogs.com/xrq730/" target="_blank" title="五月的仓颉">五月的仓颉</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://ifeve.com/category/java/" target="_blank" title="并发编程网">并发编程网</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/carl-zk" target="_blank" title="git主页">git主页</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer">
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p>  <br>
+			STAY FOOLISH, STAY HUNGRY.</p>
+	</section>
+	 
+	<div class="social-font">
+
+	</div>
+			
+		
+
+		<p class="copyright">
+		All Rights Reserved © 2019 
+		
+		<a href="/blog/about" target="_blank" title="carl-zk">carl-zk</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/blog/js/jquery-2.0.3.min.js"></script>
+<script src="/blog/js/jquery.imagesloaded.min.js"></script>
+<script src="/blog/js/gallery.js"></script>
+<script src="/blog/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/blog/img/scrollup.png"></a>
+	</div>
+	<script src="/blog/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
+
