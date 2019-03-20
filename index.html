@@ -135,7 +135,7 @@
 </li>
 </ul>
 <h2 id="授权类型"><a href="#授权类型" class="headerlink" title="授权类型"></a>授权类型</h2><p>根据客户端的位置和性质，OAuth2定义了4种类型。</p>
-<h3 id="Authorization-Code-Grant"><a href="#Authorization-Code-Grant" class="headerlink" title="Authorization Code Grant"></a>Authorization Code Grant</h3><ol>
+<h3 id="授权码模式（Authorization-Code-Grant）"><a href="#授权码模式（Authorization-Code-Grant）" class="headerlink" title="授权码模式（Authorization Code Grant）"></a>授权码模式（Authorization Code Grant）</h3><ol>
 <li>何时应使用？<br>当客户端是web服务器时应该使用。它允许你获取一个长期有效的token，因为你可以用refresh token去刷新它（如果认证服务器允许的话）。</li>
 <li>例如：</li>
 </ol>
@@ -160,7 +160,7 @@
 <p>更多<a href="https://tools.ietf.org/html/rfc6749#section-4.1" target="_blank" rel="noopener">Authorization Code Grant</a></p>
 </blockquote>
 <p>时序图：<br><img src="/blog/2019/03/18/understanding-oauth2/auth_code_flow.png" alt></p>
-<h3 id="Implicit-Grant"><a href="#Implicit-Grant" class="headerlink" title="Implicit Grant"></a>Implicit Grant</h3><ol>
+<h3 id="简化模式（Implicit-Grant）"><a href="#简化模式（Implicit-Grant）" class="headerlink" title="简化模式（Implicit Grant）"></a>简化模式（Implicit Grant）</h3><ol>
 <li>何时使用？<br>一般用在当客户端是用像JavaScript脚本语言写的浏览器端应用。这个类型不允许下发refresh token。</li>
 <li>例如：</li>
 </ol>
@@ -190,7 +190,7 @@
 <p>更多：<a href="https://tools.ietf.org/html/rfc6749#section-4.2" target="_blank" rel="noopener">Implicit Grant</a></p>
 </blockquote>
 <p>时序图：<br><img src="/blog/2019/03/18/understanding-oauth2/implicit_flow.png" alt></p>
-<h3 id="Resource-Owner-Password-Credentials-Grant"><a href="#Resource-Owner-Password-Credentials-Grant" class="headerlink" title="Resource Owner Password Credentials Grant"></a>Resource Owner Password Credentials Grant</h3><ol>
+<h3 id="密码模式（Resource-Owner-Password-Credentials-Grant）"><a href="#密码模式（Resource-Owner-Password-Credentials-Grant）" class="headerlink" title="密码模式（Resource Owner Password Credentials Grant）"></a>密码模式（Resource Owner Password Credentials Grant）</h3><ol>
 <li>何时使用？<br>使用这种方式，证书（即密码）会经过客户端发送给认证服务器。这势必在客户端和认证服务器都可靠的情况下进行的（因为你要先把密码输入到client，然后client去请求啊）。通过用于客户端和认证服务器都是同一个开发团队的情况。例如，我们试想一个web网站<em>example.com</em>想去访问它的子域名<em>api.example.com</em>下的资源。用户当然会毫不犹豫的在<em>example.com</em>网站上输入自己的用户名/密码，因为这个账号就是在这个网站创建的嘛。</li>
 <li>例如：</li>
 </ol>
@@ -215,7 +215,7 @@
 <p>更多：<a href="Resource Owner Password Credentials Grant">Resource Owner Password Credentials Grant</a></p>
 </blockquote>
 <p>时序图：<br><img src="/blog/2019/03/18/understanding-oauth2/password.png" alt></p>
-<h3 id="Client-Credentials-Grant"><a href="#Client-Credentials-Grant" class="headerlink" title="Client Credentials Grant"></a>Client Credentials Grant</h3><ol>
+<h3 id="客户端模式（Client-Credentials-Grant）"><a href="#客户端模式（Client-Credentials-Grant）" class="headerlink" title="客户端模式（Client Credentials Grant）"></a>客户端模式（Client Credentials Grant）</h3><ol>
 <li>何时使用？<br>通常客户端即是资源拥有者。它无需做任何认证申请。</li>
 <li>例如：</li>
 </ol>
@@ -257,7 +257,34 @@
 <blockquote>
 <p>更多：<a href="https://tools.ietf.org/html/rfc6749#section-10.12" target="_blank" rel="noopener">Cross-Site Request Forgery</a></p>
 </blockquote>
-<h3 id="Implicit-Grant-的漏洞"><a href="#Implicit-Grant-的漏洞" class="headerlink" title="Implicit Grant 的漏洞"></a>Implicit Grant 的漏洞</h3><h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><p><a href="https://tools.ietf.org/id/draft-ietf-oauth-security-topics-06.html" target="_blank" rel="noopener">OAuth 2.0 Security Best Current Practice</a><br><a href="https://pattern-match.com/blog/2018/10/17/springboot2-with-oauth2-integration/" target="_blank" rel="noopener">springboot2-with-oauth2-integration</a><br><a href="https://spring.io/guides/tutorials/spring-boot-oauth2/" target="_blank" rel="noopener">Spring Boot and OAuth2</a></p>
+<h3 id="Implicit-Grant-的漏洞"><a href="#Implicit-Grant-的漏洞" class="headerlink" title="Implicit Grant 的漏洞"></a>Implicit Grant 的漏洞</h3><p>这种类型的认证是最不安全的，因为它暴露了access token给客户端（多数情况下指JavaScript）。被众所周知的一个漏洞是源自客户端不能分辨这个access token是否是为ta生成的（<a href="http://en.wikipedia.org/wiki/Confused_deputy_problem" target="_blank" rel="noopener">Confused Deputy Problem</a>）。这就方便了攻击者去窃取。</p>
+<p>例如：</p>
+<ul>
+<li>攻击者想要窃取受害者在网站A的账号。这个网站允许你用Facebook账号以Implicit方式认证。</li>
+<li>攻击者创造了网站B，也允许Facebook账号登录。</li>
+<li>受害者使用Facebook登录网站B，因此Implicit就给它生成了一个access token。</li>
+<li>攻击者拿到了这个网站B上的access token，修改了URI片段用在了网站A。如果网站A没有防止这种攻击，那么受害者的账号就沦陷了。</li>
+</ul>
+<p>解决方法：<br>为了避免这种漏洞，认证服务器必须提供一个获取该access token信息的API。这样，网站A就可以比较access token跟攻击者自己的的client_id。由于这个窃取的access token来自网站B，因此与网站A的client_id不同，因此访问网站A时会受到拒绝。</p>
+<p>Google在它的API文档中这样描述的：<br><a href="https://developers.google.com/accounts/docs/OAuth2Login#validatingtoken" target="_blank" rel="noopener">https://developers.google.com/accounts/docs/OAuth2Login#validatingtoken</a>.</p>
+<blockquote>
+<p>更多：<a href="http://tools.ietf.org/html/rfc6819#section-4.4.2.6" target="_blank" rel="noopener">http://tools.ietf.org/html/rfc6819#section-4.4.2.6</a></p>
+</blockquote>
+<h3 id="点击劫持（Clickjacking）"><a href="#点击劫持（Clickjacking）" class="headerlink" title="点击劫持（Clickjacking）"></a>点击劫持（Clickjacking）</h3><p>攻击者会将授权页面放在iframe中，隐藏在一个链接下面诱导受害者点击，点击的地方正好是授权页的“允许”按钮。</p>
+<p>例如：<br><img src="/blog/2019/03/18/understanding-oauth2/oauth2_clickjacking.png" alt></p>
+<p>解决方法：<br>认证服务器在授权页面的返回头中增加key为<code>X-Frame-Options</code> value为<code>DENY</code>or<code>SAMEORIGIN</code>。这就防止了授权页面被放在iframe（DENY）或要求主页面的域名要和iframe的<code>src</code>值保持一致（SAMEORIGIN）.</p>
+<p>这个header不是标准的，但是在下面的浏览器中都支持：IE8+, Firefox3.6.9+, Opera10.5+, Safari4+, Chrome 4.1.249.1042+.</p>
+<blockquote>
+<p>更多：<a href="https://developer.mozilla.org/en-US/docs/HTTP/X-Frame-Options" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/HTTP/X-Frame-Options</a>.</p>
+</blockquote>
+<blockquote>
+<p>这是RFC中列举的漏洞和对应的方法：<a href="http://tools.ietf.org/html/rfc6819" target="_blank" rel="noopener">http://tools.ietf.org/html/rfc6819</a>.</p>
+</blockquote>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>无论怎样，OAuth2几年来似乎加强了自身作为对不同应用间授权的标准。<br>我希望自己帮助了你了解了它的工作原理。接下来我们会看到如何用Symfony2来创建自己的OAuth2认证服务器。<br>++原谅我蹩脚的英语。（译者注：作者原话）</p>
+<blockquote>
+<p>译者注：这篇文章对授权码模式的描述不太具体，阮一峰的写的很好。</p>
+</blockquote>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://tools.ietf.org/id/draft-ietf-oauth-security-topics-06.html" target="_blank" rel="noopener">OAuth 2.0 Security Best Current Practice</a><br><a href="https://pattern-match.com/blog/2018/10/17/springboot2-with-oauth2-integration/" target="_blank" rel="noopener">springboot2-with-oauth2-integration</a><br><a href="https://spring.io/guides/tutorials/spring-boot-oauth2/" target="_blank" rel="noopener">Spring Boot and OAuth2</a><br><a href="https://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html" target="_blank" rel="noopener">阮一峰 理解OAuth 2.0</a></p>
 
         
         
