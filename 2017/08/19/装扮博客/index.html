@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="一叶轻舟渡万江">
 <meta property="og:description" content="color picker 取色看到别人博客闪闪的，禁不住也想秀一个。好感慨前端技术发展的速度，奈何自己后端不咋样，前端也是个白痴，唉。 particles.jsparticles.js github主页使用教程 See the Pen particles.js by Vincent Garreau (@VincentGarreau) on CodePen.   canvas-nest.jscanv">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-16T01:58:27.867Z">
+<meta property="og:updated_time" content="2019-03-26T14:41:28.163Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="装扮博客">
 <meta name="twitter:description" content="color picker 取色看到别人博客闪闪的，禁不住也想秀一个。好感慨前端技术发展的速度，奈何自己后端不咋样，前端也是个白痴，唉。 particles.jsparticles.js github主页使用教程 See the Pen particles.js by Vincent Garreau (@VincentGarreau) on CodePen.   canvas-nest.jscanv">
@@ -99,7 +99,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#particles-js"><span class="toc-number">1.</span> <span class="toc-text">particles.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#canvas-nest-js"><span class="toc-number">2.</span> <span class="toc-text">canvas-nest.js</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#particles-js"><span class="toc-number">1.</span> <span class="toc-text">particles.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#canvas-nest-js"><span class="toc-number">2.</span> <span class="toc-text">canvas-nest.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mermaid"><span class="toc-number">3.</span> <span class="toc-text">mermaid</span></a></li></ol>
 		
 		</div>
 		
@@ -109,6 +109,22 @@
 <script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
 
 <h2 id="canvas-nest-js"><a href="#canvas-nest-js" class="headerlink" title="canvas-nest.js"></a>canvas-nest.js</h2><p><a href="https://github.com/hustcc/canvas-nest.js">canvas-nest.js github主页</a><br><a href="http://www.w3school.com.cn/html5/html_5_canvas.asp" target="_blank" rel="noopener">canvas w3c</a></p>
+<h2 id="mermaid"><a href="#mermaid" class="headerlink" title="mermaid"></a>mermaid</h2><p>一个非常棒的画流程图、时序图等工具，集成到博客中也很简单。<br>集成方法：<a href="https://www.npmjs.com/package/hexo-filter-mermaid-diagrams" target="_blank" rel="noopener">https://www.npmjs.com/package/hexo-filter-mermaid-diagrams</a><br>命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">` ` ` mermaid</span><br><span class="line">sequenceDiagram</span><br><span class="line">    participant Alice</span><br><span class="line">    participant Bob</span><br><span class="line">    Alice-&gt;&gt;John: Hello John, how are you?</span><br><span class="line">    loop Healthcheck</span><br><span class="line">        John-&gt;&gt;John: Fight against hypochondria</span><br><span class="line">    end</span><br><span class="line">    Note right of John: Rational thoughts &lt;br/&gt;prevail...</span><br><span class="line">    John--&gt;&gt;Alice: Great!</span><br><span class="line">    John-&gt;&gt;Bob: How about you?</span><br><span class="line">    Bob--&gt;&gt;John: Jolly good!</span><br><span class="line">` ` `</span><br></pre></td></tr></table></figure></p>
+<p>效果：</p>
+<pre class="mermaid">sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br>prevail...
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!</pre>
+
+<p><a href="https://mermaidjs.github.io/" target="_blank" rel="noopener">more syntax</a></p>
+<p>其它类似工具：<a href="https://github.com/plantuml/plantuml">plantuml</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -185,7 +201,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#particles-js"><span class="toc-number">1.</span> <span class="toc-text">particles.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#canvas-nest-js"><span class="toc-number">2.</span> <span class="toc-text">canvas-nest.js</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#particles-js"><span class="toc-number">1.</span> <span class="toc-text">particles.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#canvas-nest-js"><span class="toc-number">2.</span> <span class="toc-text">canvas-nest.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mermaid"><span class="toc-number">3.</span> <span class="toc-text">mermaid</span></a></li></ol>
  
   </div>
 
@@ -263,11 +279,11 @@
 			
 		
 			
-				<li><a href="/blog/tags/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
+				<li><a href="/blog/tags/spring/" title="spring">spring<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/blog/tags/spring/" title="spring">spring<sup>3</sup></a></li>
+				<li><a href="/blog/tags/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
 			
 		
 			
@@ -553,6 +569,13 @@ $(document).ready(function(){
 }); 
 </script>
 
+
+  <script src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({theme: 'forest'});
+    }
+  </script>
 
 
 <!-- Analytics Begin -->
