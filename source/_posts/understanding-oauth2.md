@@ -5,6 +5,7 @@ category:
 tags: oauth2
 ---
 > 头一次尝试翻译一篇文章，不准确处请指正，谢谢！
+> [https://github.com/carl-zk/JavaJava/tree/master/oauth2](https://github.com/carl-zk/JavaJava/tree/master/oauth2)
 
 Source: [http://www.bubblecode.net/en/2016/01/22/understanding-oauth2/](http://www.bubblecode.net/en/2016/01/22/understanding-oauth2/)
 如果OAuth2对你来说仍是一个模糊的概念或者你只想验证一下自己理解的是否准确，那么这篇文章就是为你准备的。
@@ -216,4 +217,5 @@ Google在它的API文档中这样描述的：
 [springboot2-with-oauth2-integration](https://pattern-match.com/blog/2018/10/17/springboot2-with-oauth2-integration/)
 [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
 [阮一峰 理解OAuth 2.0](https://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html)
+[Using Spring Security 5 to integrate with OAuth 2-secured services such as Facebook and GitHub](https://spring.io/blog/2018/03/06/using-spring-security-5-to-integrate-with-oauth-2-secured-services-such-as-facebook-and-github)
 
