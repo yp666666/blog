@@ -159,13 +159,25 @@
 </nav>
 
 
-<script>
-var idcomments_acct = '6c620c25e7e3131e9d1e5bf1ffe54668';
-var idcomments_post_id;
-var idcomments_post_url;
-</script>
-<script type="text/javascript" src="https://www.intensedebate.com/js/genericLinkWrapperV2.js"></script>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 
+
+    <div id="gitment-comments"></div>    
+
+
+<script>
+const gitment = new Gitment({
+    id: 'DijkstraPriorityQueue',
+    owner: 'carl-zk',
+    repo: 'comments-store',
+    oauth: {
+        client_id: 'd1262e8923cd7f8e0196',
+        client_secret: 'ef46a4afe7dca3fe5fa7e0038a08b99da41b20ba'
+    }
+});
+gitment.render(document.getElementById('gitment-comments'));
+</script>
 	
 
 </div>  
@@ -292,11 +304,11 @@ var idcomments_post_url;
 			
 		
 			
-				<li><a href="/blog/tags/log4j2/" title="log4j2">log4j2<sup>1</sup></a></li>
+				<li><a href="/blog/tags/maven/" title="maven">maven<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/blog/tags/maven/" title="maven">maven<sup>1</sup></a></li>
+				<li><a href="/blog/tags/log4j2/" title="log4j2">log4j2<sup>1</sup></a></li>
 			
 		
 			
