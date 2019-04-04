@@ -167,24 +167,25 @@
 </nav>
 
 
-<!-- LiveRe City install code -->
-<div id="lv-container" data-id="city" data-uid="MTAyMC8zMTU5NS84MTU5">
-<script type="text/javascript">
-   (function(d, s) {
-       var j, e = d.getElementsByTagName(s)[0];
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 
-       if (typeof LivereTower === 'function') { return; }
 
-       j = d.createElement(s);
-       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-       j.async = true;
+    <div id="gitment-comments"></div>    
 
-       e.parentNode.insertBefore(j, e);
-   })(document, 'script');
+
+<script>
+const gitment = new Gitment({
+    id: 'FatMouse Trade',
+    owner: 'carl-zk',
+    repo: 'comments-store',
+    oauth: {
+        client_id: 'd1262e8923cd7f8e0196',
+        client_secret: 'ef46a4afe7dca3fe5fa7e0038a08b99da41b20ba'
+    }
+});
+gitment.render(document.getElementById('gitment-comments'));
 </script>
-<noscript>Please activate JavaScript for write a comment in LiveRe</noscript>
-</div>
-<!-- completed City install code -->
 	
 
 </div>  
@@ -230,7 +231,7 @@
 		  
 		
 		  
-			<li><a href="/blog/categories/系统配置/" title="系统配置">系统配置<sup>11</sup></a></li>
+			<li><a href="/blog/categories/系统配置/" title="系统配置">系统配置<sup>12</sup></a></li>
 		  
 		
 		  
@@ -311,11 +312,11 @@
 			
 		
 			
-				<li><a href="/blog/tags/maven/" title="maven">maven<sup>1</sup></a></li>
+				<li><a href="/blog/tags/log4j2/" title="log4j2">log4j2<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/blog/tags/log4j2/" title="log4j2">log4j2<sup>1</sup></a></li>
+				<li><a href="/blog/tags/maven/" title="maven">maven<sup>1</sup></a></li>
 			
 		
 			
@@ -565,7 +566,8 @@ $(document).ready(function(){
 </script>
 
 
-  <script src="/blog/js/mermaid.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/7.1.2/mermaid.min.js"></script>
+  <!-- script src="/blog/js/mermaid.min.js" -->
   <script>
     if (window.mermaid) {
       mermaid.initialize({theme: 'forest'});

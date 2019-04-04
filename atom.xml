@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://github.com/carl-zk/blog/"/>
-  <updated>2019-03-24T13:23:19.166Z</updated>
+  <updated>2019-04-04T12:52:36.434Z</updated>
   <id>https://github.com/carl-zk/blog/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MacBook 磁盘清理</title>
+    <link href="https://github.com/carl-zk/blog/2019/04/04/MacBook-%E7%A3%81%E7%9B%98%E6%B8%85%E7%90%86/"/>
+    <id>https://github.com/carl-zk/blog/2019/04/04/MacBook-磁盘清理/</id>
+    <published>2019-04-04T11:51:52.000Z</published>
+    <updated>2019-04-04T12:52:36.434Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>刚买的电脑磁盘满了，有点怀疑人生。查下来发现是由于sublime的临时文件导致的。由于Mac上趁手的工具需要花钱，从磁盘中找到哪里出的问题也需要些技巧，所以在这里记下来方便以后查看。</p></blockquote><h2 id="查看磁盘总的使用情况"><a href="#查看磁盘总的使用情况" class="headerlink" title="查看磁盘总的使用情况"></a>查看磁盘总的使用情况</h2><p><code>df -h</code><br><img src="http://ppdxz524p.bkt.clouddn.com/macClean/1.png" alt><br>可以看到磁盘剩余89G。</p><h2 id="查看文件夹大小"><a href="#查看文件夹大小" class="headerlink" title="查看文件夹大小"></a>查看文件夹大小</h2><p>有两种方式，以查看文件夹A为例：</p><ul><li>打开Finder，选中文件夹A，右键 -&gt; Get Info。</li><li>打开终端，进入文件夹A的上一级目录，输入 <code>du -h -d 1</code><br>我使用命令方式，逐级定位出超大文件夹位置。使用命令<code>ls -ahg</code>查看超大文件夹各文件大小：<br><img src="http://ppdxz524p.bkt.clouddn.com/macClean/2.png" alt><br>至此终于找出299G大的临时文件.channel_v3.json.swp，将其删除即可。</li></ul><h2 id="帮助"><a href="#帮助" class="headerlink" title="帮助"></a>帮助</h2><p>Finder 查看隐藏文件（夹），快捷键：<code>command + shift + .</code><br>Finder 打开显示完整路径 <code>View -&gt; Show Path Bar</code><br>Finder 中右键进入Terminal <code>Finder -&gt; Services -&gt; Services Preferences/Shortcuts/Files and Folders/New Terminal Tab at Folder</code> </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;刚买的电脑磁盘满了，有点怀疑人生。查下来发现是由于sublime的临时文件导致的。由于Mac上趁手的工具需要花钱，从磁盘中找到哪里出的问题也需要些技巧，所以在这里记下来方便以后查看。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;查看磁盘总的
+      
+    
+    </summary>
+    
+      <category term="系统配置" scheme="https://github.com/carl-zk/blog/categories/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Understanding-Oauth2</title>
@@ -462,32 +488,6 @@
     
     </summary>
     
-    
-  </entry>
-  
-  <entry>
-    <title>Mysql Server</title>
-    <link href="https://github.com/carl-zk/blog/2018/04/06/mysql-server/"/>
-    <id>https://github.com/carl-zk/blog/2018/04/06/mysql-server/</id>
-    <published>2018-04-06T11:21:31.000Z</published>
-    <updated>2019-02-16T01:58:27.796Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="忘记-root-密码"><a href="#忘记-root-密码" class="headerlink" title="忘记 root 密码"></a>忘记 root 密码</h4><blockquote><p>mysql server version : 5.7.9+</p></blockquote><p>查找MySQL sever 安装位置<br>sudo find / -name “mysqld”</p><ol><li>停服务<br>ps -ef|grep mysql<br>sudo kill -9 pid1 pid2            </li><li><p>重启</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld_safe --skip-grant-tables &amp;</span><br></pre></td></tr></table></figure></li><li><p>登录<br>mysql -u root </p></li><li>重置密码<br>use mysql;<br>update user set authentication_string=’password’, password_expired = ‘N’ where User =’root’ and Host=’localhost’;<br>flush privileges;<br>exit;<br>停服务重新登录即可<br>sudo mysqld -uroot &amp;</li></ol><p>注意：Mac 上通过 System Preferences 启动的 server，其启动参数 -u 为 _mysql，在上述第2步之后，第3步改为<br>mysql -u _mysql<br>grant all privileges on <em>.</em> to ‘root‘@’%’ identified by ‘password’ with grant option;</p><h4 id="数据迁移"><a href="#数据迁移" class="headerlink" title="数据迁移"></a>数据迁移</h4><h5 id="导出工具"><a href="#导出工具" class="headerlink" title="导出工具"></a>导出工具</h5><p><a href="http://www.runoob.com/mysql/mysql-database-export.html" target="_blank" rel="noopener">MySQL数据导出</a></p><h6 id="mysqldump"><a href="#mysqldump" class="headerlink" title="mysqldump"></a>mysqldump</h6><ol><li>导出 sql<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -hhost -uroot -ppassword <span class="comment">--single-transaction schema table -r </span></span><br><span class="line">dump.sql</span><br></pre></td></tr></table></figure></li></ol><p>导入：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br><span class="line">&gt;use databases;</span><br><span class="line">&gt;source /path/to/dump.sql</span><br></pre></td></tr></table></figure></p><ol start="2"><li>导出 tab<br>mysqldump -hhost -uroot -ppassword –tab=/Users/hero/tmp –fields-terminated-by=’^!’ –lines-terminated-by=’\n’ –single-transaction schema table</li></ol><h5 id="比较工具"><a href="#比较工具" class="headerlink" title="比较工具"></a>比较工具</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldbcompare --server1=root:密码@IP:3306 --server2=root:passwd@ip:3306 --difftype=sql schema1:schema2</span><br></pre></td></tr></table></figure><p> 如果schema含有非字母字符，<br> –difftype=sql “`nh-rel-x`:`nh-rel-x`“ –run-all-tests &gt; ~/tmp/res.txt</p><h4 id="比较脚本"><a href="#比较脚本" class="headerlink" title="比较脚本"></a>比较脚本</h4><blockquote><p>场景：在不影响生产的情况下拿A库与B库做比较，A与B分别在两个地方，用otter做了实时同步。但是otter有问题，不知道哪些数据同步有问题，所以需要逐表比对一下。</p></blockquote><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">. /Users/hero/.zshrc</span><br><span class="line"><span class="comment"># 取所有表名</span></span><br><span class="line">echo `mysql -uuser -ppasswd -hhost &lt;&lt;EOF</span><br><span class="line"><span class="keyword">SELECT</span> table_name <span class="keyword">FROM</span> information_schema.tables <span class="keyword">where</span> table_schema=<span class="string">'nh-rel-x'</span> <span class="keyword">and</span> table_name <span class="keyword">like</span> <span class="string">'nh%'</span> <span class="keyword">and</span> table_name <span class="keyword">not</span> <span class="keyword">like</span> <span class="string">'%_reference'</span>;</span><br><span class="line">EOF` &gt; tables.txt</span><br><span class="line"></span><br><span class="line">sed -E -e 's/\t/ /g' -e 's/ +/\n/g' tables.txt | tail -n +2 &gt; alltables.txt</span><br><span class="line">rm tables.txt</span><br></pre></td></tr></table></figure><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">. /Users/hero/.zshrc</span><br><span class="line"><span class="comment">#from</span></span><br><span class="line">url_from=</span><br><span class="line">user_from=</span><br><span class="line">password_from=</span><br><span class="line">schema_from=</span><br><span class="line"><span class="comment">#to</span></span><br><span class="line">url_to=</span><br><span class="line">user_to=</span><br><span class="line">password_to=</span><br><span class="line">schema_to=</span><br><span class="line"></span><br><span class="line">rm -rf from</span><br><span class="line">mkdir from</span><br><span class="line">rm -rf to</span><br><span class="line">mkdir to</span><br><span class="line">rm -rf diff</span><br><span class="line">mkdir diff</span><br><span class="line"></span><br><span class="line">for i in `cat alltables.txt`; <span class="keyword">do</span></span><br><span class="line">  echo <span class="string">"`date '+%H:%M:%S'` compare table ---&gt; "</span>$i<span class="string">"\n"</span></span><br><span class="line">  mysqldump -h$url_from -u$user_from -p$password_from <span class="comment">--single-transaction $schema_from $i -r from/$&#123;i&#125;</span></span><br><span class="line">  mysqldump -h$url_to -u$user_to -p$password_to <span class="comment">--single-transaction $schema_to $i -r to/$&#123;i&#125;</span></span><br><span class="line">  grep <span class="string">"^INSERT"</span> <span class="keyword">from</span>/$&#123;i&#125; | sed -e <span class="string">'s/INSERT.*VALUES //g'</span> -e <span class="string">'s/),/)\n/g'</span> -e <span class="string">'s/);/)\n/g'</span> &gt; <span class="keyword">from</span>/$&#123;i&#125;.ok</span><br><span class="line">  grep <span class="string">"^INSERT"</span> <span class="keyword">to</span>/$&#123;i&#125; | sed -e <span class="string">'s/INSERT.*VALUES //g'</span> -e <span class="string">'s/),/)\n/g'</span> -e <span class="string">'s/);/)\n/g'</span> &gt; <span class="keyword">to</span>/$&#123;i&#125;.ok</span><br><span class="line">  diff <span class="keyword">from</span>/$&#123;i&#125;.ok <span class="keyword">to</span>/$&#123;i&#125;.ok &gt; diff/$i</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">find diff/ -<span class="keyword">empty</span> -<span class="keyword">delete</span></span><br><span class="line"></span><br><span class="line">&gt;report.txt</span><br><span class="line">tabs=<span class="string">`ls diff/`</span></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> $tabs; <span class="keyword">do</span></span><br><span class="line">  shanghai=<span class="string">`grep -c "^&lt;" diff/$t`</span></span><br><span class="line">  hongkong=<span class="string">`grep -c "^&gt;" diff/$t`</span></span><br><span class="line">  echo $t  $shanghai  $hongkong &gt;&gt; report.txt</span><br><span class="line">done</span><br><span class="line"><span class="keyword">sort</span> -n -k <span class="number">2</span> report.txt</span><br></pre></td></tr></table></figure><h4 id="mm"><a href="#mm" class="headerlink" title="mm"></a>mm</h4><p><code>mysql -uroot -ppassword &lt; init.sql</code><br>init.sql<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> mydb;</span><br><span class="line"><span class="comment">#创建用户表</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> t_user (</span><br><span class="line">    <span class="keyword">id</span> <span class="built_in">INT</span> auto_increment PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">        <span class="keyword">name</span> <span class="built_in">VARCHAR</span>(<span class="number">30</span>),</span><br><span class="line">        <span class="keyword">password</span> <span class="built_in">varchar</span>(<span class="number">64</span>),</span><br><span class="line">        credits <span class="built_in">INT</span></span><br><span class="line">)<span class="keyword">ENGINE</span>=<span class="keyword">INNODB</span>;</span><br><span class="line"><span class="comment">#创建登录日志表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">TABLE</span> t_login_log (</span><br><span class="line">      <span class="keyword">id</span> <span class="built_in">int</span> auto_increment PRIMARY <span class="keyword">KEY</span>,</span><br><span class="line">        user_id <span class="built_in">int</span>,</span><br><span class="line">        ip <span class="built_in">varchar</span>(<span class="number">23</span>),</span><br><span class="line">        login_datetime datetime</span><br><span class="line">)<span class="keyword">ENGINE</span>=<span class="keyword">INNODB</span>;</span><br></pre></td></tr></table></figure></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h4 id=&quot;忘记-root-密码&quot;&gt;&lt;a href=&quot;#忘记-root-密码&quot; class=&quot;headerlink&quot; title=&quot;忘记 root 密码&quot;&gt;&lt;/a&gt;忘记 root 密码&lt;/h4&gt;&lt;blockquote&gt;
-&lt;p&gt;mysql server version : 5.
-      
-    
-    </summary>
-    
-      <category term="系统配置" scheme="https://github.com/carl-zk/blog/categories/%E7%B3%BB%E7%BB%9F%E9%85%8D%E7%BD%AE/"/>
-    
-    
-      <category term="MySQL" scheme="https://github.com/carl-zk/blog/tags/MySQL/"/>
     
   </entry>
   
