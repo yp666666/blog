@@ -23,10 +23,10 @@ cp server/utils/redis_init_script .
 /redis
     /server
     /storage
-redis.conf
-redis_init_script
-start
-stop
+    redis.conf
+    redis_init_script
+    start
+    stop
 ```
 
 redis.conf
@@ -117,6 +117,7 @@ Redis支持两种方式的主从配置：
 
 ## Redis实现锁的简单方法
 [SET](http://redisdoc.com/string/set.html)
+参考[Redis分布式锁的正确实现方式](https://mp.weixin.qq.com/s/XoXcqpehhXSQlRxgCBtDcw)
 
 `SET key value [EX seconds] [PX milliseconds] [NX|XX]`
 ```
@@ -163,10 +164,14 @@ public class JedisLock {
      * @param token
      * @param jedis
      */
-    public static void unlock(String key, String token, Jedis jedis) {
-        if (token.equals(jedis.get(key))) {
-            jedis.del(key);
+    public static boolean unlock(String key, String token, Jedis jedis) {
+        String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+        Object result = jedis.eval(script, Collections.singletonList(lockKey), Collections.singletonList(requestId));
+
+        if (RELEASE_SUCCESS.equals(result)) {
+            return true;
         }
+        return false;
     }
 
     /**
@@ -238,6 +243,7 @@ public class JedisLock {
 1. 没有重入场景；
 2. 没有wait、notify机制，并且wait具有时效性，可以不响应中断，但是为了方便停服务，所以直接return false；
 3. 为什么不使用set(key, token, "NX")而要给锁加一个过期时间？是因为如果a、b共用一个Redis server，其中a突然挂了，那么a设置的key就永远都不过期，b就永远拿不到这个key的锁。
+4. redis server单节点，多节点情况下不保证一致性，所以一般使用zookeeper。
 
 适用于竞争不激烈的场景，如果对锁的竞争很激烈，或者需要重入，请使用Redisson。
 
