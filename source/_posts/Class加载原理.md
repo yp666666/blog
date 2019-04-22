@@ -146,3 +146,53 @@ public class Singleton {
     }
 }
 ```
+终于可以把上面的坑填了，其实上面这种懒加载写法是关于Class加载时哪些值会被初始化的问题。
+
+```java
+public class Test {
+
+    int a;
+    static int b = 1;
+    static Inner inner;
+
+    static {
+        System.out.println("static block b=" + b);
+        b = 2;
+        System.out.println(inner == null);
+    }
+
+    public static void fun() {
+        System.out.println("hello");
+        inner = new Inner();
+    }
+
+    public static void main(String[] args) throws ClassNotFoundException {
+        /*System.out.println(Test.class.getName());
+        Class.forName(Test.class.getName());*/
+        Test.fun();
+    }
+
+    static class Inner {
+        static {
+            System.out.println("inner static block");
+        }
+    }
+}
+/**
+ * 结果：
+ * static block b=1
+ * true
+ * hello
+ * inner static block
+ */
+```
+Class初始化顺序：
+- static variables and static initializers in order
+- instance variables and instance initializers in order
+- constructors
+
+参考[https://www.geeksforgeeks.org/order-execution-initialization-blocks-constructors-java/](https://www.geeksforgeeks.org/order-execution-initialization-blocks-constructors-java/)
+[https://www.baeldung.com/java-initialization](https://www.baeldung.com/java-initialization)
+
+
+

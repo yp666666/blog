@@ -66,7 +66,7 @@ E36B85CC 84991F19 7575D828 470A92AB
 
 ![](/blog/2017/08/17/%E4%B8%80%E7%AB%99%E5%BC%8F%E9%85%8D%E7%BD%AEubuntu/Screenshot.png)
 
-# unity 转 gnome
+##### unity 转 gnome
 可以看出来，扁平化是好看了点，但是太占内存！而且桌面系统不稳定，叹！
 
 >GNOME Shell，是GNOME桌面环境3.0及其后续版本中的核心用户界面，取代了GNOME 2.0版本中的GNOME Panel与其他相关程序。GNOME shell于2011年4月6日发布。GNOME shell提供窗口切换、载入应用程序等基本功能。GNOME Shell使用mutter作为窗口管理器，Clutter工具箱提供视觉特效与硬件加速。
