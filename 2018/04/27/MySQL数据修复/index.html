@@ -12,14 +12,14 @@
 
     
     <meta name="description" content="A、B数据库使用otter实时同步，但是有数据不一致情况，需要做数据修复。因为没有找到合适的工具，所以自己写了些脚本来做处理，配合人工检查和过滤，99.9%的数据得以修复。  思路： 以A、B中的同一张表t举例，首先拿到 A.t 和 B.t 的INSERT语句，提取ID相同的不同数据； 拼接update语句：a. ID为奇数，取A.t中的数据；b. ID为偶数，取B.t中的数据； 在A、B中执行">
-<meta name="keywords" content="MySQL">
+<meta name="keywords" content="MySQL,shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL数据修复">
 <meta property="og:url" content="https://github.com/carl-zk/blog/2018/04/27/MySQL数据修复/index.html">
 <meta property="og:site_name" content="一叶轻舟渡万江">
 <meta property="og:description" content="A、B数据库使用otter实时同步，但是有数据不一致情况，需要做数据修复。因为没有找到合适的工具，所以自己写了些脚本来做处理，配合人工检查和过滤，99.9%的数据得以修复。  思路： 以A、B中的同一张表t举例，首先拿到 A.t 和 B.t 的INSERT语句，提取ID相同的不同数据； 拼接update语句：a. ID为奇数，取A.t中的数据；b. ID为偶数，取B.t中的数据； 在A、B中执行">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-16T01:58:27.788Z">
+<meta property="og:updated_time" content="2019-04-21T13:02:04.854Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL数据修复">
 <meta name="twitter:description" content="A、B数据库使用otter实时同步，但是有数据不一致情况，需要做数据修复。因为没有找到合适的工具，所以自己写了些脚本来做处理，配合人工检查和过滤，99.9%的数据得以修复。  思路： 以A、B中的同一张表t举例，首先拿到 A.t 和 B.t 的INSERT语句，提取ID相同的不同数据； 拼接update语句：a. ID为奇数，取A.t中的数据；b. ID为偶数，取B.t中的数据； 在A、B中执行">
@@ -61,8 +61,6 @@
 						<li><a href="/blog/archives">归档</a></li>
 					
 						<li><a href="/blog/about">关于</a></li>
-					
-						<li><a href="/blog/door">门户</a></li>
 					
 					<li>
  					
@@ -131,7 +129,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/blog/tags/MySQL/">MySQL</a>
+  <span></span> <a href="/blog/tags/MySQL/">MySQL</a><a href="/blog/tags/shell/">shell</a>
   </div>
 
 </div>
@@ -258,15 +256,11 @@ gitment.render(document.getElementById('gitment-comments'));
 			
 		
 			
-				<li><a href="/blog/tags/oracle/" title="oracle">oracle<sup>6</sup></a></li>
-			
-		
-			
 				<li><a href="/blog/tags/javascript/" title="javascript">javascript<sup>6</sup></a></li>
 			
 		
 			
-				<li><a href="/blog/tags/reflect/" title="reflect">reflect<sup>4</sup></a></li>
+				<li><a href="/blog/tags/oracle/" title="oracle">oracle<sup>6</sup></a></li>
 			
 		
 			
@@ -274,7 +268,7 @@ gitment.render(document.getElementById('gitment-comments'));
 			
 		
 			
-				<li><a href="/blog/tags/Servlet/" title="Servlet">Servlet<sup>3</sup></a></li>
+				<li><a href="/blog/tags/reflect/" title="reflect">reflect<sup>4</sup></a></li>
 			
 		
 			
@@ -282,19 +276,15 @@ gitment.render(document.getElementById('gitment-comments'));
 			
 		
 			
+				<li><a href="/blog/tags/Servlet/" title="Servlet">Servlet<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/blog/tags/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/blog/tags/python/" title="python">python<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/blog/tags/weblogic/" title="weblogic">weblogic<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/blog/tags/sql/" title="sql">sql<sup>2</sup></a></li>
+				<li><a href="/blog/tags/jenkins/" title="jenkins">jenkins<sup>2</sup></a></li>
 			
 		
 			
@@ -302,11 +292,27 @@ gitment.render(document.getElementById('gitment-comments'));
 			
 		
 			
-				<li><a href="/blog/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
+				<li><a href="/blog/tags/shell/" title="shell">shell<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/python/" title="python">python<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/sql/" title="sql">sql<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/weblogic/" title="weblogic">weblogic<sup>2</sup></a></li>
 			
 		
 			
 				<li><a href="/blog/tags/oauth2/" title="oauth2">oauth2<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/redis/" title="redis">redis<sup>1</sup></a></li>
 			
 		
 			
@@ -323,14 +329,6 @@ gitment.render(document.getElementById('gitment-comments'));
 		
 			
 				<li><a href="/blog/tags/maven/" title="maven">maven<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/blog/tags/nginx/" title="nginx">nginx<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/blog/tags/redis/" title="redis">redis<sup>1</sup></a></li>
 			
 		
 		</ul>

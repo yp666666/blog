@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="一叶轻舟渡万江">
 <meta property="og:description" content="今天想利用类加载机制写一个单例类,结果发现自己不会写了,内部类没有写成static,搞不懂为什么在外部类中不能new这个内部类——当然不能,因为外部类的这个方法是static的,而这个内部类不是static,不要以为这样就结束了,原理你清楚吗? 参考文献Internals of Java Class Loading深入探讨Java类加载器 Class和Dataclass代表一段可执行的代码(cod">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-16T01:58:27.783Z">
+<meta property="og:updated_time" content="2019-04-22T00:11:38.358Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Class加载原理">
 <meta name="twitter:description" content="今天想利用类加载机制写一个单例类,结果发现自己不会写了,内部类没有写成static,搞不懂为什么在外部类中不能new这个内部类——当然不能,因为外部类的这个方法是static的,而这个内部类不是static,不要以为这样就结束了,原理你清楚吗? 参考文献Internals of Java Class Loading深入探讨Java类加载器 Class和Dataclass代表一段可执行的代码(cod">
@@ -61,8 +61,6 @@
 						<li><a href="/blog/archives">归档</a></li>
 					
 						<li><a href="/blog/about">关于</a></li>
-					
-						<li><a href="/blog/door">门户</a></li>
 					
 					<li>
  					
@@ -119,6 +117,15 @@
 <p><code>&lt;&lt;Java语言规范&gt;&gt;</code>给出了详细的loading,linking,initialization处理过程.</p>
 </blockquote>
 <p>基本的就是以上这些,根据这个可以看看第二篇文章,为什么两个classloader加载的类可以cast,试试找出原因,让它们不能cast.如果你能够使这个示例报错,说明你已经掌握了classloader的原理了.<br>忽然看到开头的疑问,本来是想通过了解ClassLoader来解释内部类加载的问题.内部类的加载看来要分开分析了.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> commons;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by hero on 17-3-27.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Inner.ins;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"hello"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        Inner.print(s);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Inner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton ins = <span class="keyword">new</span> Singleton();</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">            System.out.println(s);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Inner</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"inner init"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"init"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>终于可以把上面的坑填了，其实上面这种懒加载写法是关于Class加载时哪些值会被初始化的问题。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> a;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> b = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">static</span> Inner inner;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"static block b="</span> + b);</span><br><span class="line">        b = <span class="number">2</span>;</span><br><span class="line">        System.out.println(inner == <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"hello"</span>);</span><br><span class="line">        inner = <span class="keyword">new</span> Inner();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</span><br><span class="line">        <span class="comment">/*System.out.println(Test.class.getName());</span></span><br><span class="line"><span class="comment">        Class.forName(Test.class.getName());*/</span></span><br><span class="line">        Test.fun();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Inner</span> </span>&#123;</span><br><span class="line">        <span class="keyword">static</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">"inner static block"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 结果：</span></span><br><span class="line"><span class="comment"> * static block b=1</span></span><br><span class="line"><span class="comment"> * true</span></span><br><span class="line"><span class="comment"> * hello</span></span><br><span class="line"><span class="comment"> * inner static block</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<p>Class初始化顺序：</p>
+<ul>
+<li>static variables and static initializers in order</li>
+<li>instance variables and instance initializers in order</li>
+<li>constructors</li>
+</ul>
+<p>参考<a href="https://www.geeksforgeeks.org/order-execution-initialization-blocks-constructors-java/" target="_blank" rel="noopener">https://www.geeksforgeeks.org/order-execution-initialization-blocks-constructors-java/</a><br><a href="https://www.baeldung.com/java-initialization" target="_blank" rel="noopener">https://www.baeldung.com/java-initialization</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -259,15 +266,11 @@ gitment.render(document.getElementById('gitment-comments'));
 			
 		
 			
-				<li><a href="/blog/tags/oracle/" title="oracle">oracle<sup>6</sup></a></li>
-			
-		
-			
 				<li><a href="/blog/tags/javascript/" title="javascript">javascript<sup>6</sup></a></li>
 			
 		
 			
-				<li><a href="/blog/tags/reflect/" title="reflect">reflect<sup>4</sup></a></li>
+				<li><a href="/blog/tags/oracle/" title="oracle">oracle<sup>6</sup></a></li>
 			
 		
 			
@@ -275,7 +278,7 @@ gitment.render(document.getElementById('gitment-comments'));
 			
 		
 			
-				<li><a href="/blog/tags/Servlet/" title="Servlet">Servlet<sup>3</sup></a></li>
+				<li><a href="/blog/tags/reflect/" title="reflect">reflect<sup>4</sup></a></li>
 			
 		
 			
@@ -283,19 +286,15 @@ gitment.render(document.getElementById('gitment-comments'));
 			
 		
 			
+				<li><a href="/blog/tags/Servlet/" title="Servlet">Servlet<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/blog/tags/LeetCode/" title="LeetCode">LeetCode<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/blog/tags/python/" title="python">python<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/blog/tags/weblogic/" title="weblogic">weblogic<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/blog/tags/sql/" title="sql">sql<sup>2</sup></a></li>
+				<li><a href="/blog/tags/jenkins/" title="jenkins">jenkins<sup>2</sup></a></li>
 			
 		
 			
@@ -303,11 +302,27 @@ gitment.render(document.getElementById('gitment-comments'));
 			
 		
 			
-				<li><a href="/blog/tags/jenkins/" title="jenkins">jenkins<sup>1</sup></a></li>
+				<li><a href="/blog/tags/shell/" title="shell">shell<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/python/" title="python">python<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/sql/" title="sql">sql<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/weblogic/" title="weblogic">weblogic<sup>2</sup></a></li>
 			
 		
 			
 				<li><a href="/blog/tags/oauth2/" title="oauth2">oauth2<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/redis/" title="redis">redis<sup>1</sup></a></li>
 			
 		
 			
@@ -324,14 +339,6 @@ gitment.render(document.getElementById('gitment-comments'));
 		
 			
 				<li><a href="/blog/tags/maven/" title="maven">maven<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/blog/tags/nginx/" title="nginx">nginx<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/blog/tags/redis/" title="redis">redis<sup>1</sup></a></li>
 			
 		
 		</ul>
